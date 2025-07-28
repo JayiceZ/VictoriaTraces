@@ -10,7 +10,9 @@ import (
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/flagutil"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/httpserver"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/protoparser/protoparserutil"
+	"github.com/VictoriaMetrics/fastcache"
 	"github.com/VictoriaMetrics/metrics"
+	"github.com/cespare/xxhash/v2"
 
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/insertutil"
 	otelpb "github.com/VictoriaMetrics/VictoriaTraces/lib/protoparser/opentelemetry/pb"
@@ -28,6 +30,11 @@ var (
 var (
 	mandatoryStreamFields = []string{otelpb.ResourceAttrServiceName, otelpb.NameField}
 	msgFieldValue         = "-"
+)
+
+var (
+	// traceIDCache for deduplicating trace_id
+	traceIDCache = fastcache.New(32 * 1024 * 1024)
 )
 
 // RequestHandler processes Opentelemetry insert requests
@@ -147,39 +154,53 @@ func pushFieldsFromSpan(span *otelpb.Span, scopeCommonFields []logstorage.Field,
 	fields = appendKeyValuesWithPrefix(fields, span.Attributes, "", otelpb.SpanAttrPrefixField)
 
 	for idx, event := range span.Events {
-		eventFieldPrefix := otelpb.EventPrefix + strconv.Itoa(idx) + ":"
+		eventFieldPrefix := otelpb.EventPrefix
+		eventFieldSuffix := ":" + strconv.Itoa(idx)
 		fields = append(fields,
-			logstorage.Field{Name: eventFieldPrefix + otelpb.EventTimeUnixNanoField, Value: strconv.FormatUint(event.TimeUnixNano, 10)},
-			logstorage.Field{Name: eventFieldPrefix + otelpb.EventNameField, Value: event.Name},
-			logstorage.Field{Name: eventFieldPrefix + otelpb.EventDroppedAttributesCountField, Value: strconv.FormatUint(uint64(event.DroppedAttributesCount), 10)},
+			logstorage.Field{Name: eventFieldPrefix + otelpb.EventTimeUnixNanoField + eventFieldSuffix, Value: strconv.FormatUint(event.TimeUnixNano, 10)},
+			logstorage.Field{Name: eventFieldPrefix + otelpb.EventNameField + eventFieldSuffix, Value: event.Name},
+			logstorage.Field{Name: eventFieldPrefix + otelpb.EventDroppedAttributesCountField + eventFieldSuffix, Value: strconv.FormatUint(uint64(event.DroppedAttributesCount), 10)},
 		)
 		// append event attributes
-		fields = appendKeyValuesWithPrefix(fields, event.Attributes, "", eventFieldPrefix+otelpb.EventAttrPrefix)
+		fields = appendKeyValuesWithPrefixSuffix(fields, event.Attributes, "", eventFieldPrefix+otelpb.EventAttrPrefix, eventFieldSuffix)
 	}
 
 	for idx, link := range span.Links {
-		linkFieldPrefix := otelpb.LinkPrefix + strconv.Itoa(idx) + ":"
-
+		linkFieldPrefix := otelpb.LinkPrefix
+		linkFieldSuffix := ":" + strconv.Itoa(idx)
 		fields = append(fields,
-			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkTraceIDField, Value: link.TraceID},
-			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkSpanIDField, Value: link.SpanID},
-			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkTraceStateField, Value: link.TraceState},
-			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkDroppedAttributesCountField, Value: strconv.FormatUint(uint64(link.DroppedAttributesCount), 10)},
-			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkFlagsField, Value: strconv.FormatUint(uint64(link.Flags), 10)},
+			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkTraceIDField + linkFieldSuffix, Value: link.TraceID},
+			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkSpanIDField + linkFieldSuffix, Value: link.SpanID},
+			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkTraceStateField + linkFieldSuffix, Value: link.TraceState},
+			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkDroppedAttributesCountField + linkFieldSuffix, Value: strconv.FormatUint(uint64(link.DroppedAttributesCount), 10)},
+			logstorage.Field{Name: linkFieldPrefix + otelpb.LinkFlagsField + linkFieldSuffix, Value: strconv.FormatUint(uint64(link.Flags), 10)},
 		)
 
 		// append link attributes
-		fields = appendKeyValuesWithPrefix(fields, link.Attributes, "", linkFieldPrefix+otelpb.LinkAttrPrefix)
+		fields = appendKeyValuesWithPrefixSuffix(fields, link.Attributes, "", linkFieldPrefix+otelpb.LinkAttrPrefix, linkFieldSuffix)
 	}
 	fields = append(fields, logstorage.Field{
 		Name:  "_msg",
 		Value: msgFieldValue,
 	})
 	lmp.AddRow(int64(span.EndTimeUnixNano), fields, nil)
+
+	// create an entity in trace-id-idx stream, if this trace_id hasn't been seen before.
+	if !traceIDCache.Has([]byte(span.TraceID)) {
+		lmp.AddRow(int64(span.StartTimeUnixNano), []logstorage.Field{
+			{Name: otelpb.TraceIDIndexFieldName, Value: span.TraceID},
+			{Name: "_msg", Value: msgFieldValue},
+		}, []logstorage.Field{{Name: otelpb.TraceIDIndexStreamName, Value: strconv.FormatUint(xxhash.Sum64String(span.TraceID)%otelpb.TraceIDIndexPartitionCount, 10)}})
+		traceIDCache.Set([]byte(span.TraceID), nil)
+	}
 	return fields
 }
 
 func appendKeyValuesWithPrefix(fields []logstorage.Field, kvs []*otelpb.KeyValue, parentField, prefix string) []logstorage.Field {
+	return appendKeyValuesWithPrefixSuffix(fields, kvs, parentField, prefix, "")
+}
+
+func appendKeyValuesWithPrefixSuffix(fields []logstorage.Field, kvs []*otelpb.KeyValue, parentField, prefix, suffix string) []logstorage.Field {
 	for _, attr := range kvs {
 		fieldName := attr.Key
 		if parentField != "" {
@@ -187,7 +208,7 @@ func appendKeyValuesWithPrefix(fields []logstorage.Field, kvs []*otelpb.KeyValue
 		}
 
 		if attr.Value.KeyValueList != nil {
-			fields = appendKeyValuesWithPrefix(fields, attr.Value.KeyValueList.Values, fieldName, prefix)
+			fields = appendKeyValuesWithPrefixSuffix(fields, attr.Value.KeyValueList.Values, fieldName, prefix, suffix)
 			continue
 		}
 
@@ -197,7 +218,7 @@ func appendKeyValuesWithPrefix(fields []logstorage.Field, kvs []*otelpb.KeyValue
 			v = "-"
 		}
 		fields = append(fields, logstorage.Field{
-			Name:  prefix + fieldName,
+			Name:  prefix + fieldName + suffix,
 			Value: v,
 		})
 	}
