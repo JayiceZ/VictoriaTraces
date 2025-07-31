@@ -37,7 +37,7 @@ Feel free asking any questions regarding VictoriaTraces:
 * [X (Twitter)](https://x.com/VictoriaMetrics/)
 * [Linkedin](https://www.linkedin.com/company/victoriametrics/)
 * [Reddit](https://www.reddit.com/r/VictoriaMetrics/)
-* [Telegram-en](https://t.me/VictoriaMetrics_en)
+* [Telegram](https://t.me/VictoriaTraces)
 * [Mastodon](https://mastodon.social/@victoriametrics/)
 
 If you like VictoriaTraces and want to contribute, then please [read these docs](https://docs.victoriametrics.com/victoriametrics/contributing/).
