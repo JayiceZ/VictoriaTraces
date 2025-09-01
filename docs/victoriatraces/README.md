@@ -14,7 +14,7 @@ built by the [VictoriaMetrics](https://github.com/VictoriaMetrics) team.
 
 VictoriaTraces provides the following prominent features:
 - It is resource-efficient and fast. It uses up to [**3.7x less RAM and up to 2.6x less CPU**](https://victoriametrics.com/blog/dev-note-distributed-tracing-with-victorialogs/) than other solutions such as Grafana Tempo.
-- VictoriaTraces' capacity and performance scales linearly with the available resources (CPU, RAM, disk IO, disk space). Also, it can scale horizontally to many nodes in [cluster mode](https://docs.victoriametrics.com/victorialogs/cluster/).
+- VictoriaTraces' capacity and performance scales linearly with the available resources (CPU, RAM, disk IO, disk space). Also, it can scale horizontally to many nodes in [cluster mode](https://docs.victoriametrics.com/victoriatraces/cluster/).
 - It has no additional storage dependencies (such as object storage or external databases like ClickHouse and Elasticsearch) for production readiness.
 - It accepts trace spans in the popular [OpenTelemetry protocol](https://opentelemetry.io/docs/specs/otel/protocol/)(OTLP).
 - It provides [Jaeger Query Service JSON APIs](https://www.jaegertracing.io/docs/2.6/apis/#internal-http-json) 
