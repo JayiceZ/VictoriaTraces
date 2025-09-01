@@ -97,4 +97,18 @@ See more details about the HTTP APIs and params VictoriaTraces supports and how 
 
 ### Alerting
 
-### Monitoring
+see [these docs](https://docs.victoriametrics.com/victoriatraces/vmalert/).
+
+## Monitoring
+
+VictoriaTraces exposes internal metrics in Prometheus exposition format at `http://localhost:10428/metrics` page.
+It is recommended to set up monitoring of these metrics via VictoriaMetrics
+(see [these docs](https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/#how-to-scrape-prometheus-exporters-such-as-node-exporter)),
+vmagent (see [these docs](https://docs.victoriametrics.com/victoriametrics/vmagent/#how-to-collect-metrics-in-prometheus-format)) or via Prometheus.
+
+We recommend installing Grafana dashboard for [VictoriaTraces single-node](https://github.com/VictoriaMetrics/VictoriaTraces/blob/master/dashboards/victoriatraces.json) or [cluster](https://github.com/VictoriaMetrics/VictoriaTraces/blob/master/dashboards/victoriatraces-cluster.json).
+
+We recommend setting up [alerts](https://github.com/VictoriaMetrics/VictoriaTraces/blob/master/deployment/docker/rules/alerts-vtraces.yml)
+via [vmalert](https://docs.victoriametrics.com/victoriametrics/vmalert/) or via Prometheus.
+
+VictoriaTraces emits its own logs to stdout. It is recommended to investigate these logs during troubleshooting.
