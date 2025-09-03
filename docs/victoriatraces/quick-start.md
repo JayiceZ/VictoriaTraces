@@ -1,11 +1,11 @@
 ---
-weight: 2
+weight: 1
 title: Quick start
 menu:
   docs:
     identifier: vt-quick-start
     parent: victoriatraces
-    weight: 2
+    weight: 1
     title: Quick start
 tags:
   - traces

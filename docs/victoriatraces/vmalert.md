@@ -1,10 +1,10 @@
 ---
-weight: 10
+weight: 6
 title: vmalert
 menu:
   docs:
     parent: "victoriatraces"
-    weight: 10
+    weight: 6
     identifier: "victoriatraces-vmalert"
 tags:
    - traces

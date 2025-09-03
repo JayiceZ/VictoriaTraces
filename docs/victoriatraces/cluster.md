@@ -1,11 +1,11 @@
 ---
-weight: 20
+weight: 3
 title: VictoriaTraces cluster
 menu:
   docs:
     parent: victoriatraces
     identifier: vt-cluster
-    weight: 20
+    weight: 3
     title: VictoriaTraces cluster
 tags:
   - traces

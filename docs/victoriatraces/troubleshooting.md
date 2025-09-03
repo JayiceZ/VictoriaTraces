@@ -1,11 +1,11 @@
 ---
-weight: 2
+weight: 20
 title: Troubleshooting
 menu:
   docs:
     identifier: vt-troubleshooting
     parent: victoriatraces
-    weight: 2
+    weight: 20
     title: Troubleshooting
 tags:
   - traces

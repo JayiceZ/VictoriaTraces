@@ -1,11 +1,11 @@
 ---
-weight: 2
+weight: 30
 title: Roadmap
 menu:
   docs:
     identifier: vt-roadmap
     parent: victoriatraces
-    weight: 2
+    weight: 30
     title: Roadmap
 tags:
   - traces
