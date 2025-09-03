@@ -16,8 +16,6 @@ aliases:
 The following items need to be completed before general availability (GA) version:
 - [ ] Finalize the data structure and commit to backward compatibility.
 - [ ] Finalize the data distribution algorithm in the cluster version.
-- [ ] Provide monitoring and alerting rules for VictoriaTraces single-node and cluster version.
-- [ ] Provide alerting support on traces data with [vmalert](https://docs.victoriametrics.com/vmalert/).
 
 The following functionality is planned in the future versions of VictoriaTraces after GA:
 - [ ] Provide web UI to visualize traces.

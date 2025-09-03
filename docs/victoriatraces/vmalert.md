@@ -1,6 +1,6 @@
 ---
 weight: 6
-title: vmalert
+title: Alerting with traces
 menu:
   docs:
     parent: "victoriatraces"
@@ -11,6 +11,7 @@ tags:
    - metrics
 aliases:
 - /victoriatraces/vmalert.html
+
 ---
 
 [vmalert](https://docs.victoriametrics.com/victoriametrics/vmalert/){{% available_from "v1.106.0" %}} integrates with VictoriaTraces via stats APIs [`/select/logsql/stats_query`](https://docs.victoriametrics.com/victorialogs/querying/#querying-log-stats)
