@@ -41,19 +41,19 @@ sequenceDiagram
     participant VT as vtselect
     participant QC as Query Client
     
-    Note over LS,VS2: Trace Ingestion Flow
+    Note over TS,VS2: Trace Ingestion Flow
     TS->>VI: Send spans via OTLP
     VI->>VS1: POST /internal/insert (HTTP)
     VI->>VS2: POST /internal/insert (HTTP)
     Note right of VI: Distributes spans evenly<br/>across vtstorage nodes
     
     Note over VS1,QC: Query Flow
-    QC->>VL: Query via HTTP endpoints
-    VL->>VS1: GET /internal/select/* (HTTP)
-    VL->>VS2: GET /internal/select/* (HTTP)
-    VS1-->>VL: Return local results
-    VS2-->>VL: Return local results
-    VL->>QC: Processed & aggregated results
+    QC->>VT: Query via HTTP endpoints
+    VT->>VS1: GET /internal/select/* (HTTP)
+    VT->>VS2: GET /internal/select/* (HTTP)
+    VS1-->>VT: Return local results
+    VS2-->>VT: Return local results
+    VT->>QC: Processed & aggregated results
 ```
 
 - `vtinsert` handles trace spans ingestion via [the OpenTelemetry protocol (OTLP)](https://opentelemetry.io/docs/specs/otlp/).  
