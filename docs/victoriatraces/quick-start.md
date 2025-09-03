@@ -29,7 +29,7 @@ VictoriaMetrics is available as:
 Run the newest available [VictoriaTraces release](https://docs.victoriametrics.com/victoriatraces/changelog/) from [Docker Hub](https://hub.docker.com/r/victoriametrics/victoria-traces) or [Quay](https://quay.io/repository/victoriametrics/victoria-traces):
 ```shell
 docker run --rm -it -p 10428:10428 -v ./victoria-traces-data:/victoria-traces-data \
-  docker.io/victoriametrics/victoria-traces:v0.1.0
+  docker.io/victoriametrics/victoria-traces:v0.2.0
 ```
 
 This command will make VictoriaTraces run in the foreground, and store the ingested data to the `victoria-traces-data` directory. You should see the following logs:
@@ -49,11 +49,11 @@ See how to [write](#write-data) or [read](#read-data) from VictoriaTraces.
 
 - Download the correct binary for your OS and architecture from [GitHub](https://github.com/VictoriaMetrics/VictoriaTraces/releases/). Here's an example for `Linux/amd64`:
 ```sh
-curl -L -O https://github.com/VictoriaMetrics/VictoriaTraces/releases/download/v0.1.0/victoria-traces-linux-amd64-v0.1.0.tar.gz
+curl -L -O https://github.com/VictoriaMetrics/VictoriaTraces/releases/download/v0.2.0/victoria-traces-linux-amd64-v0.2.0.tar.gz
 ```
 - Extract the archive by running:
 ```sh
-tar -xvf victoria-traces-linux-amd64-v0.1.0.tar.gz
+tar -xvf victoria-traces-linux-amd64-v0.2.0.tar.gz
 ```
 - Go to the binary's folder and start VictoriaTraces:
 ```sh
