@@ -3,6 +3,7 @@ package tests
 import (
 	"encoding/hex"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -122,7 +123,7 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 	tc.Assert(&at.AssertOptions{
 		Msg: "unexpected /select/jaeger/api/services response",
 		Got: func() any {
-			return sut.JaegerAPIServices(t, at.QueryOpts{})
+			return sut.JaegerAPIServices(t, at.QueryOpts{}).GetServicesResponse
 		},
 		Want: &at.JaegerAPIServicesResponse{
 			Data: []string{serviceName},
@@ -136,7 +137,7 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 	tc.Assert(&at.AssertOptions{
 		Msg: "unexpected /select/jaeger/api/services/*/operations response",
 		Got: func() any {
-			return sut.JaegerAPIOperations(t, serviceName, at.QueryOpts{})
+			return sut.JaegerAPIOperations(t, serviceName, at.QueryOpts{}).GetOperationsResponse
 		},
 		Want: &at.JaegerAPIOperationsResponse{
 			Data: []string{spanName},
@@ -200,7 +201,7 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 					StartTimeMin: spanTime.Add(-10 * time.Minute),
 					StartTimeMax: spanTime.Add(10 * time.Minute),
 				},
-			}, at.QueryOpts{})
+			}, at.QueryOpts{}).GetTracesResponse
 		},
 		Want: &at.JaegerAPITracesResponse{
 			Data: expectTraceData,
@@ -209,15 +210,48 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 			cmpopts.IgnoreFields(at.JaegerAPITracesResponse{}, "Errors", "Limit", "Offset", "Total"),
 		},
 	})
+	tc.Assert(&at.AssertOptions{
+		Msg: "unexpected /select/jaeger/api/traces response",
+		Got: func() any {
+			queryResult := sut.JaegerAPITraces(t, at.JaegerQueryParam{
+				TraceQueryParam: query.TraceQueryParam{
+					ServiceName:  serviceName,
+					StartTimeMin: spanTime.Add(12 * -24 * time.Hour),
+					StartTimeMax: spanTime.Add(10 * -24 * time.Hour),
+				},
+			}, at.QueryOpts{})
+			if !strings.Contains(queryResult.RespBody, "out of retention") {
+				t.Fatalf("out of retention request should return error, get:")
+			}
+			return queryResult.GetTracesResponse
+		},
+		Want: &at.JaegerAPITracesResponse{},
+		CmpOpts: []cmp.Option{
+			cmpopts.IgnoreFields(at.JaegerAPITracesResponse{}, "Errors", "Limit", "Offset", "Total"),
+		},
+	})
+
 	// check single trace data via /select/jaeger/api/traces/<trace_id>
 	tc.Assert(&at.AssertOptions{
 		Msg: "unexpected /select/jaeger/api/traces/<trace_id> response",
 		Got: func() any {
-			return sut.JaegerAPITrace(t, hex.EncodeToString([]byte(traceID)), at.QueryOpts{})
+			return sut.JaegerAPITrace(t, hex.EncodeToString([]byte(traceID)), at.QueryOpts{}).GetTraceResponse
 		},
 		Want: &at.JaegerAPITraceResponse{
 			Data: expectTraceData,
 		},
+		CmpOpts: []cmp.Option{
+			cmpopts.IgnoreFields(at.JaegerAPITraceResponse{}, "Errors", "Limit", "Offset", "Total"),
+		},
+	})
+
+	// execute q non-exist traceId query in /select/jaeger/api/traces/<trace_id>
+	tc.Assert(&at.AssertOptions{
+		Msg: "unexpected /select/jaeger/api/traces/<trace_id> response",
+		Got: func() any {
+			return sut.JaegerAPITrace(t, hex.EncodeToString([]byte("non-exist")), at.QueryOpts{}).GetTraceResponse
+		},
+		Want: &at.JaegerAPITraceResponse{Data: []at.TracesResponseData{}},
 		CmpOpts: []cmp.Option{
 			cmpopts.IgnoreFields(at.JaegerAPITraceResponse{}, "Errors", "Limit", "Offset", "Total"),
 		},

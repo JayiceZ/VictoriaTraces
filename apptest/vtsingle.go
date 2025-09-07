@@ -94,27 +94,27 @@ func (app *Vtsingle) ForceMerge(t *testing.T) {
 // JaegerAPIServices is a test helper function that queries for service list
 // by sending an HTTP GET request to /select/jaeger/api/services
 // Vtsingle endpoint.
-func (app *Vtsingle) JaegerAPIServices(t *testing.T, opts QueryOpts) *JaegerAPIServicesResponse {
+func (app *Vtsingle) JaegerAPIServices(t *testing.T, opts QueryOpts) *JaegerQueryResult {
 	t.Helper()
 
 	res, _ := app.cli.Get(t, app.jaegerAPIServicesURL+"?"+opts.asURLValues().Encode())
-	return NewJaegerAPIServicesResponse(t, res)
+	return &JaegerQueryResult{GetServicesResponse: NewJaegerAPIServicesResponse(t, res), RespBody: res}
 }
 
 // JaegerAPIOperations is a test helper function that queries for operation list of a service
 // by sending an HTTP GET request to /select/jaeger/api/services/<service_name>/operations
 // Vtsingle endpoint.
-func (app *Vtsingle) JaegerAPIOperations(t *testing.T, serviceName string, opts QueryOpts) *JaegerAPIOperationsResponse {
+func (app *Vtsingle) JaegerAPIOperations(t *testing.T, serviceName string, opts QueryOpts) *JaegerQueryResult {
 	t.Helper()
 
 	url := fmt.Sprintf(app.jaegerAPIOperationsURL, serviceName) + "?" + opts.asURLValues().Encode()
 	res, _ := app.cli.Get(t, url)
-	return NewJaegerAPIOperationsResponse(t, res)
+	return &JaegerQueryResult{GetOperationsResponse: NewJaegerAPIOperationsResponse(t, res), RespBody: res}
 }
 
 // JaegerAPITraces is a test helper function that queries for traces with filter conditions
 // by sending an HTTP GET request to /select/jaeger/api/traces Vtsingle endpoint.
-func (app *Vtsingle) JaegerAPITraces(t *testing.T, param JaegerQueryParam, opts QueryOpts) *JaegerAPITracesResponse {
+func (app *Vtsingle) JaegerAPITraces(t *testing.T, param JaegerQueryParam, opts QueryOpts) *JaegerQueryResult {
 	t.Helper()
 
 	paramsEnc := "?"
@@ -127,18 +127,18 @@ func (app *Vtsingle) JaegerAPITraces(t *testing.T, param JaegerQueryParam, opts 
 		paramsEnc += uv.Encode()
 	}
 	res, _ := app.cli.Get(t, app.jaegerAPITracesURL+paramsEnc)
-	return NewJaegerAPITracesResponse(t, res)
+	return &JaegerQueryResult{GetTracesResponse: NewJaegerAPITracesResponse(t, res), RespBody: res}
 }
 
 // JaegerAPITrace is a test helper function that queries for a single trace with trace_id
 // by sending an HTTP GET request to /select/jaeger/api/traces/<trace_id>
 // Vtsingle endpoint.
-func (app *Vtsingle) JaegerAPITrace(t *testing.T, traceID string, opts QueryOpts) *JaegerAPITraceResponse {
+func (app *Vtsingle) JaegerAPITrace(t *testing.T, traceID string, opts QueryOpts) *JaegerQueryResult {
 	t.Helper()
 
 	url := fmt.Sprintf(app.jaegerAPITraceURL, traceID)
 	res, _ := app.cli.Get(t, url+"?"+opts.asURLValues().Encode())
-	return NewJaegerAPITraceResponse(t, res)
+	return &JaegerQueryResult{GetTraceResponse: NewJaegerAPITraceResponse(t, res), RespBody: res}
 }
 
 // JaegerAPIDependencies is a test helper function that queries for the dependencies.

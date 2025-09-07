@@ -133,7 +133,6 @@ func GetSpanNameList(ctx context.Context, cp *CommonParams, serviceName string) 
 // todo in-memory cache of hot traces.
 func GetTrace(ctx context.Context, cp *CommonParams, traceID string) ([]*Row, error) {
 	currentTime := time.Now()
-
 	// possible partition
 	// query: {trace_id_idx="xx"} AND trace_id:traceID
 	qStr := fmt.Sprintf(`{%s="%d"} AND %s:=%q | fields _time`, otelpb.TraceIDIndexStreamName, xxhash.Sum64String(traceID)%otelpb.TraceIDIndexPartitionCount, otelpb.TraceIDIndexFieldName, traceID)
@@ -143,17 +142,26 @@ func GetTrace(ctx context.Context, cp *CommonParams, traceID string) ([]*Row, er
 	}
 	q.AddPipeLimit(1)
 	traceTimestamp, err := findTraceIDTimeSplitTimeRange(ctx, q, cp)
-	if err != nil {
+	if err != nil && !isOutOfRetentionPeriodError(err) {
 		return nil, fmt.Errorf("cannot find trace_id %q start time: %s", traceID, err)
 	}
 
 	// fast path: trace start time found, search in [trace start time, trace start time + *traceMaxDurationWindow] time range.
 	if !traceTimestamp.IsZero() {
-		return findSpansByTraceIDAndTime(ctx, cp, traceID, traceTimestamp.Add(-*traceMaxDurationWindow), traceTimestamp.Add(*traceMaxDurationWindow))
+		rows, err := findSpansByTraceIDAndTime(ctx, cp, traceID, traceTimestamp.Add(-*traceMaxDurationWindow), traceTimestamp.Add(*traceMaxDurationWindow))
+		// meeting out of retention error means no such traceID in retention period.
+		if err != nil && isOutOfRetentionPeriodError(err) {
+			return []*Row{}, nil
+		}
+		return rows, err
 	}
 	// slow path: if trace start time not exist, probably the root span was not available.
 	// try to search from now to 0 timestamp.
-	return findSpansByTraceID(ctx, cp, traceID)
+	rows, err := findSpansByTraceID(ctx, cp, traceID)
+	if err != nil && isOutOfRetentionPeriodError(err) {
+		return []*Row{}, nil
+	}
+	return rows, err
 }
 
 // GetTraceList returns multiple traceIDs and spans of them in []*Row format.
@@ -361,7 +369,6 @@ func findTraceIDTimeSplitTimeRange(ctx context.Context, q *logstorage.Query, cp 
 	traceIDStartTimeInt := int64(0)
 	var missingTimeColumn atomic.Bool
 	ctxWithCancel, cancel := context.WithCancel(ctx)
-
 	writeBlock := func(_ uint, db *logstorage.DataBlock) {
 		if missingTimeColumn.Load() {
 			return
@@ -387,7 +394,7 @@ func findTraceIDTimeSplitTimeRange(ctx context.Context, q *logstorage.Query, cp 
 	currentTime := time.Now()
 	startTime := currentTime.Add(-*traceSearchStep)
 	endTime := currentTime
-	for startTime.UnixNano() > 0 { // todo: no need to search time range before retention period.
+	for startTime.UnixNano() > 0 {
 		qq := q.CloneWithTimeFilter(currentTime.UnixNano(), startTime.UnixNano(), endTime.UnixNano())
 		if err := vtstorage.RunQuery(ctxWithCancel, cp.TenantIDs, qq, writeBlock); err != nil {
 			return time.Time{}, err
@@ -406,7 +413,6 @@ func findTraceIDTimeSplitTimeRange(ctx context.Context, q *logstorage.Query, cp 
 		// found result, perform extra search for traceMaxDurationWindow and then break.
 		return time.Unix(traceIDStartTimeInt/1e9, traceIDStartTimeInt%1e9), nil
 	}
-
 	return time.Time{}, nil
 }
 
@@ -460,9 +466,7 @@ func findSpansByTraceIDAndTime(ctx context.Context, cp *CommonParams, traceID st
 	if err != nil {
 		return nil, fmt.Errorf("cannot parse query [%s]: %s", qStr, err)
 	}
-
 	ctxWithCancel, cancel := context.WithCancel(ctx)
-
 	// search for trace spans and write to `rows []*Row`
 	var rowsLock sync.Mutex
 	var rows []*Row
@@ -526,4 +530,8 @@ func checkTraceIDList(traceIDList []string) []string {
 		}
 	}
 	return result
+}
+
+func isOutOfRetentionPeriodError(err error) bool {
+	return err != nil && strings.Contains(err.Error(), "out of retention period")
 }

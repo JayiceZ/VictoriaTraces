@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/VictoriaMetrics/VictoriaMetrics/lib/httpserver"
 	"io"
 	"math"
 	"net/http"
@@ -136,7 +137,10 @@ func (sn *storageNode) runQuery(ctx context.Context, tenantIDs []logstorage.Tena
 		if err != nil {
 			responseBody = []byte(err.Error())
 		}
-		return fmt.Errorf("unexpected status code for the request to %q: %d; want %d; response: %q", reqURL, resp.StatusCode, http.StatusOK, responseBody)
+		return &httpserver.ErrorWithStatusCode{
+			Err:        fmt.Errorf("unexpected status code for the request to %q: %d; want %d; response: %q", reqURL, resp.StatusCode, http.StatusOK, responseBody),
+			StatusCode: resp.StatusCode,
+		}
 	}
 
 	// read the response

@@ -11,6 +11,7 @@ The following `tip` changes can be tested by building VictoriaTraces components 
 * [How to build single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/#how-to-build-from-sources)
 
 ## tip
+* FEATURE: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtstorage in [VictoriaTraces cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): deny out-of-retention request in vtstorage. See [this issue](https://github.com/VictoriaMetrics/VictoriaTraces/issues/48) for details. .
 
 ## [v0.2.0](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.2.0)
 

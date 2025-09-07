@@ -57,12 +57,20 @@ type VictoriaTracesWriteQuerier interface {
 	StorageMerger
 }
 
+type JaegerQueryResult struct {
+	GetServicesResponse   *JaegerAPIServicesResponse
+	GetOperationsResponse *JaegerAPIOperationsResponse
+	GetTracesResponse     *JaegerAPITracesResponse
+	GetTraceResponse      *JaegerAPITraceResponse
+	RespBody              string
+}
+
 // JaegerQuerier contains methods available to Jaeger HTTP API for Querying.
 type JaegerQuerier interface {
-	JaegerAPIServices(t *testing.T, opts QueryOpts) *JaegerAPIServicesResponse
-	JaegerAPIOperations(t *testing.T, serviceName string, opts QueryOpts) *JaegerAPIOperationsResponse
-	JaegerAPITraces(t *testing.T, params JaegerQueryParam, opts QueryOpts) *JaegerAPITracesResponse
-	JaegerAPITrace(t *testing.T, traceID string, opts QueryOpts) *JaegerAPITraceResponse
+	JaegerAPIServices(t *testing.T, opts QueryOpts) *JaegerQueryResult
+	JaegerAPIOperations(t *testing.T, serviceName string, opts QueryOpts) *JaegerQueryResult
+	JaegerAPITraces(t *testing.T, params JaegerQueryParam, opts QueryOpts) *JaegerQueryResult
+	JaegerAPITrace(t *testing.T, traceID string, opts QueryOpts) *JaegerQueryResult
 	JaegerAPIDependencies(t *testing.T, opts QueryOpts)
 }
 
@@ -242,9 +250,7 @@ func NewJaegerAPITracesResponse(t *testing.T, s string) *JaegerAPITracesResponse
 	t.Helper()
 
 	res := &JaegerAPITracesResponse{}
-	if err := json.Unmarshal([]byte(s), res); err != nil {
-		t.Fatalf("could not unmarshal query response data=\n%s\n: %v", string(s), err)
-	}
+	_ = json.Unmarshal([]byte(s), res)
 	return res
 }
 

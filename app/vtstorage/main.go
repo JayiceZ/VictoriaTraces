@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/VictoriaMetrics/VictoriaMetrics/lib/fasttime"
 	"io"
 	"net/http"
 	"time"
@@ -341,6 +342,19 @@ func (*Storage) MustAddRows(lr *logstorage.LogRows) {
 	}
 }
 
+// CheckTimeExceedRetention
+// endTimestamp is a nanosecond timestamp
+func CheckTimeExceedRetention(endTimestamp int64) error {
+	minAllowedTimestamp := int64(fasttime.UnixTimestamp()*1000) - retentionPeriod.Milliseconds()
+	if endTimestamp/1000000 > minAllowedTimestamp {
+		return nil
+	}
+	return &httpserver.ErrorWithStatusCode{
+		Err:        fmt.Errorf("out of retention period. the given time range %d is outside the allowed -retentionPeriod=%s", endTimestamp, retentionPeriod),
+		StatusCode: http.StatusServiceUnavailable,
+	}
+}
+
 // RunQuery runs the given q and calls writeBlock for the returned data blocks
 func RunQuery(ctx context.Context, tenantIDs []logstorage.TenantID, q *logstorage.Query, writeBlock logstorage.WriteDataBlockFunc) error {
 	qOpt, limit := q.GetLastNResultsQuery()
@@ -349,6 +363,10 @@ func RunQuery(ctx context.Context, tenantIDs []logstorage.TenantID, q *logstorag
 	}
 
 	if localStorage != nil {
+		_, maxTimestamp := q.GetFilterTimeRange()
+		if err := CheckTimeExceedRetention(maxTimestamp); err != nil {
+			return err
+		}
 		return localStorage.RunQuery(ctx, tenantIDs, q, writeBlock)
 	}
 	return netstorageSelect.RunQuery(ctx, tenantIDs, q, writeBlock)
