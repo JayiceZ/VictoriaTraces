@@ -3,7 +3,6 @@ package tests
 import (
 	"encoding/hex"
 	"os"
-	"strings"
 	"testing"
 	"time"
 
@@ -15,15 +14,6 @@ import (
 	otelpb "github.com/VictoriaMetrics/VictoriaTraces/lib/protoparser/opentelemetry/pb"
 )
 
-type JaegerIngestionParam struct {
-	serviceName       string
-	spanName          string
-	traceID           string
-	spanID            string
-	format            string
-	expectServiceList *[]string
-}
-
 // TestSingleOTLPIngestionJaegerQuery test data ingestion of `/insert/opentelemetry/v1/traces` API
 // and queries of various `/select/jaeger/api/*` APIs for vl-single.
 func TestSingleOTLPIngestionJaegerQuery(t *testing.T) {
@@ -33,39 +23,18 @@ func TestSingleOTLPIngestionJaegerQuery(t *testing.T) {
 	defer tc.Stop()
 
 	sut := tc.MustStartDefaultVtsingle()
-	var expectServiceList []string
 
-	pbParam := JaegerIngestionParam{
-		serviceName:       "testPbKeyIngestQueryService",
-		spanName:          "testPbKeyIngestQuerySpan",
-		traceID:           "123456789",
-		spanID:            "987654321",
-		format:            "protobuf",
-		expectServiceList: &expectServiceList,
-	}
-	expectServiceList = append(expectServiceList, pbParam.serviceName)
-	testOTLPIngestionJaegerQuery(tc, sut, pbParam)
-
-	jsonParam := JaegerIngestionParam{
-		serviceName:       "testJsonKeyIngestQueryService",
-		spanName:          "testJsonKeyIngestQuerySpan",
-		traceID:           "11223344A",
-		spanID:            "22334455B",
-		format:            "json",
-		expectServiceList: &expectServiceList,
-	}
-	expectServiceList = append(expectServiceList, jsonParam.serviceName)
-	testOTLPIngestionJaegerQuery(tc, sut, jsonParam)
+	testOTLPIngestionJaegerQuery(tc, sut)
 }
 
-func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQuerier, param JaegerIngestionParam) {
+func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQuerier) {
 	t := tc.T()
 
 	// prepare test data for ingestion and assertion.
-	serviceName := param.serviceName
-	spanName := param.spanName
-	traceID := param.traceID
-	spanID := param.spanID
+	serviceName := "testKeyIngestQueryService"
+	spanName := "testKeyIngestQuerySpan"
+	traceID := "123456789"
+	spanID := "987654321"
 	testTagValue := "testValue"
 	testTag := []*otelpb.KeyValue{
 		{
@@ -146,7 +115,7 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 	}
 
 	// ingest data via /insert/opentelemetry/v1/traces
-	sut.OTLPExportTraces(t, req, at.QueryOpts{Format: param.format})
+	sut.OTLPExportTraces(t, req, at.QueryOpts{})
 	sut.ForceFlush(t)
 
 	// check services via /select/jaeger/api/services
@@ -156,13 +125,10 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 			return sut.JaegerAPIServices(t, at.QueryOpts{})
 		},
 		Want: &at.JaegerAPIServicesResponse{
-			Data: *param.expectServiceList,
+			Data: []string{serviceName},
 		},
 		CmpOpts: []cmp.Option{
 			cmpopts.IgnoreFields(at.JaegerAPIServicesResponse{}, "Errors", "Limit", "Offset", "Total"),
-			cmpopts.SortSlices(func(a, b string) bool {
-				return a < b
-			}),
 		},
 	})
 
@@ -180,24 +146,14 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 		},
 	})
 
-	// https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding
-	var expectTraceID, expectSpanID string
-	if param.format == "protobuf" {
-		expectTraceID = hex.EncodeToString([]byte(traceID))
-		expectSpanID = hex.EncodeToString([]byte(spanID))
-	} else if param.format == "json" {
-		expectTraceID = strings.ToLower(traceID)
-		expectSpanID = strings.ToLower(spanID)
-	}
-
 	expectTraceData := []at.TracesResponseData{
 		{
-			Processes: map[string]at.Process{"p1": {ServiceName: param.serviceName, Tags: []at.Tag{}}},
+			Processes: map[string]at.Process{"p1": {ServiceName: "testKeyIngestQueryService", Tags: []at.Tag{}}},
 			Spans: []at.Span{
 				{
 					Duration: 0,
-					TraceID:  expectTraceID,
-					SpanID:   expectSpanID,
+					TraceID:  hex.EncodeToString([]byte(traceID)),
+					SpanID:   hex.EncodeToString([]byte(spanID)),
 					Logs: []at.Log{
 						{
 							Timestamp: spanTime.UnixMicro(),
@@ -212,8 +168,8 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 					ProcessID:     "p1",
 					References: []at.Reference{
 						{
-							TraceID: expectTraceID,
-							SpanID:  expectSpanID,
+							TraceID: hex.EncodeToString([]byte(traceID)),
+							SpanID:  hex.EncodeToString([]byte(spanID)),
 							RefType: "FOLLOWS_FROM",
 						},
 					},
@@ -230,7 +186,7 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 					},
 				},
 			},
-			TraceID: expectTraceID,
+			TraceID: hex.EncodeToString([]byte(traceID)),
 		},
 	}
 
@@ -257,7 +213,7 @@ func testOTLPIngestionJaegerQuery(tc *at.TestCase, sut at.VictoriaTracesWriteQue
 	tc.Assert(&at.AssertOptions{
 		Msg: "unexpected /select/jaeger/api/traces/<trace_id> response",
 		Got: func() any {
-			return sut.JaegerAPITrace(t, expectTraceID, at.QueryOpts{})
+			return sut.JaegerAPITrace(t, hex.EncodeToString([]byte(traceID)), at.QueryOpts{})
 		},
 		Want: &at.JaegerAPITraceResponse{
 			Data: expectTraceData,

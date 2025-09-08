@@ -1,11 +1,9 @@
 package opentelemetry
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/VictoriaMetrics/VictoriaLogs/lib/logstorage"
@@ -24,9 +22,12 @@ var maxRequestSize = flagutil.NewBytes("opentelemetry.traces.maxRequestSize", 64
 
 var (
 	requestsProtobufTotal = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
-	errorsTotal           = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
+	errorsProtobufTotal   = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
+	requestsJSONTotal     = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
+	errorsJSONTotal       = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
 
 	requestProtobufDuration = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
+	requestJSONDuration     = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
 )
 
 var (
@@ -39,27 +40,35 @@ var (
 	traceIDCache = fastcache.New(32 * 1024 * 1024)
 )
 
+const (
+	contentTypeProtobuf = "application/x-protobuf"
+	contentTypeJSON     = "application/json"
+)
+
 // RequestHandler processes Opentelemetry insert requests
 func RequestHandler(path string, w http.ResponseWriter, r *http.Request) bool {
 	switch path {
 	// use the same path as opentelemetry collector
 	// https://opentelemetry.io/docs/specs/otlp/#otlphttp-request
 	case "/insert/opentelemetry/v1/traces":
-		handleOtelInsert(r, w)
+		contentType := r.Header.Get("Content-Type")
+		if contentType != contentTypeJSON && contentType != contentTypeProtobuf {
+			httpserver.Errorf(w, r, "Content-Type %s isn't supported for opentelemetry format. Use protobuf or JSON encoding", contentType)
+			return true
+		}
+		handleExportTraceServiceRequest(r, w, contentType)
 		return true
 	default:
 		return false
 	}
 }
 
-// handleOtelInsert handles the trace ingestion request.
-func handleOtelInsert(r *http.Request, w http.ResponseWriter) {
+func handleExportTraceServiceRequest(r *http.Request, w http.ResponseWriter, contentType string) {
 	startTime := time.Now()
-	requestsProtobufTotal.Inc()
-
-	contentType := "protobuf"
-	if r.Header.Get("Content-Type") == "application/json" {
-		contentType = "json"
+	if contentType == contentTypeProtobuf {
+		requestsProtobufTotal.Inc()
+	} else if contentType == contentTypeJSON {
+		requestsJSONTotal.Inc()
 	}
 
 	cp, err := insertutil.GetCommonParams(r)
@@ -79,8 +88,8 @@ func handleOtelInsert(r *http.Request, w http.ResponseWriter) {
 
 	encoding := r.Header.Get("Content-Encoding")
 	err = protoparserutil.ReadUncompressedData(r.Body, encoding, maxRequestSize, func(data []byte) error {
-		lmp := cp.NewLogMessageProcessor("opentelemetry_traces_protobuf", false)
-		err := pushRequestToLogRows(data, lmp, contentType)
+		lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
+		err := pushExportTraceServiceRequest(data, lmp, contentType)
 		lmp.MustClose()
 		return err
 	})
@@ -89,26 +98,34 @@ func handleOtelInsert(r *http.Request, w http.ResponseWriter) {
 		return
 	}
 
-	// update requestProtobufDuration only for successfully parsed requests
-	// There is no need in updating requestProtobufDuration for request errors,
+	// update request duration only for successfully parsed requests
+	// There is no need in updating request duration for request errors,
 	// since their timings are usually much smaller than the timing for successful request parsing.
-	requestProtobufDuration.UpdateDuration(startTime)
+	if contentType == contentTypeProtobuf {
+		requestProtobufDuration.UpdateDuration(startTime)
+	} else if contentType == contentTypeJSON {
+		requestJSONDuration.UpdateDuration(startTime)
+	}
 }
 
-func pushRequestToLogRows(data []byte, lmp insertutil.LogMessageProcessor, format string) error {
-	var req otelpb.ExportTraceServiceRequest
-	var err error
-	if format == "protobuf" {
-		err = initRequestByProtobuf(data, &req)
-	} else if format == "json" {
-		err = initRequestByJson(data, &req)
-	} else {
-		err = fmt.Errorf("invalid format: %s", format)
+func pushExportTraceServiceRequest(data []byte, lmp insertutil.LogMessageProcessor, contentType string) error {
+	var (
+		req otelpb.ExportTraceServiceRequest
+		err error
+	)
+	switch contentType {
+	case contentTypeJSON:
+		if err = req.UnmarshalJSONCustom(data); err != nil {
+			errorsJSONTotal.Inc()
+			return fmt.Errorf("cannot unmarshal request from %d JSON bytes: %w", len(data), err)
+		}
+	case contentTypeProtobuf:
+		if err = req.UnmarshalProtobuf(data); err != nil {
+			errorsProtobufTotal.Inc()
+			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), err)
+		}
 	}
-	if err != nil {
-		errorsTotal.Inc()
-		return err
-	}
+
 	var commonFields []logstorage.Field
 	for _, rs := range req.ResourceSpans {
 		commonFields = commonFields[:0]
@@ -117,38 +134,6 @@ func pushRequestToLogRows(data []byte, lmp insertutil.LogMessageProcessor, forma
 		commonFieldsLen := len(commonFields)
 		for _, ss := range rs.ScopeSpans {
 			commonFields = pushFieldsFromScopeSpans(ss, commonFields[:commonFieldsLen], lmp)
-		}
-	}
-	return nil
-}
-
-func initRequestByProtobuf(data []byte, req *otelpb.ExportTraceServiceRequest) error {
-	if err := req.UnmarshalProtobuf(data); err != nil {
-		return fmt.Errorf("cannot unmarshal request from protobuf %d bytes: %w", len(data), err)
-	}
-	return nil
-}
-
-func initRequestByJson(data []byte, req *otelpb.ExportTraceServiceRequest) error {
-	if err := json.Unmarshal(data, &req); err != nil {
-		return fmt.Errorf("cannot unmarshal request from json %d bytes: %w", len(data), err)
-	}
-
-	// todo by jayice: do we really need it?
-	// traceId and spanId will be represented as case-insensitive hex-encoded strings in json format. https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding
-	// hex-encoded strings generated by standard-library are lowercase. https://github.com/golang/go/blob/master/src/encoding/hex/hex.go#L17
-	// So we need convert traceIds and spanIds to lowercase
-	for _, rs := range req.ResourceSpans {
-		for _, ss := range rs.ScopeSpans {
-			for _, s := range ss.Spans {
-				s.TraceID = strings.ToLower(s.TraceID)
-				s.SpanID = strings.ToLower(s.SpanID)
-				s.ParentSpanID = strings.ToLower(s.ParentSpanID)
-				for _, l := range s.Links {
-					l.TraceID = strings.ToLower(l.TraceID)
-					l.SpanID = strings.ToLower(l.SpanID)
-				}
-			}
 		}
 	}
 	return nil
@@ -166,7 +151,6 @@ func pushFieldsFromScopeSpans(ss *otelpb.ScopeSpans, commonFields []logstorage.F
 	commonFieldsLen := len(commonFields)
 	for _, span := range ss.Spans {
 		commonFields = pushFieldsFromSpan(span, commonFields[:commonFieldsLen], lmp)
-
 	}
 	return commonFields
 }
