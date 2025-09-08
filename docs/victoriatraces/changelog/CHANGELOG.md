@@ -12,8 +12,9 @@ The following `tip` changes can be tested by building VictoriaTraces components 
 
 ## tip
 
-* FEATURE: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtinsert in [VictoriaTraces ~~cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): support [JSON protobuf encoding](https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding) in the OpenTelemetry protocol (OTLP) for data ingestion. See [this issue](https://github.com/VictoriaMetrics/VictoriaTraces/issues/41) for details. Thanks to @JayiceZ for the [pull request](https://github.com/VictoriaMetrics/VictoriaTraces/pull/51) .
-## [v0.2.0](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.2.0)~~
+* FEATURE: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtinsert in [VictoriaTraces cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): support [JSON protobuf encoding](https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding) in the OpenTelemetry protocol (OTLP) for data ingestion. See [this issue](https://github.com/VictoriaMetrics/VictoriaTraces/issues/41) for details. Thanks to @JayiceZ for the [pull request](https://github.com/VictoriaMetrics/VictoriaTraces/pull/51).
+
+## [v0.2.0](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.2.0)
 
 Released at 2025-09-01
 
