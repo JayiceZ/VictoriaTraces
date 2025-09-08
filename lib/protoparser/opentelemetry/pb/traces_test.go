@@ -35,8 +35,8 @@ func TestUnmarshalExportTraceServiceRequest(t *testing.T) {
 		jsonBytes, _ := os.ReadFile(path.Join(jsonPath, jsonTestData[i].Name()))
 		protobufBytes, _ := os.ReadFile(path.Join(protobufPath, protobufTestData[i].Name()))
 
-		reqInJSON.UnmarshalJSONCustom(jsonBytes)
-		reqInProtobuf.UnmarshalProtobuf(protobufBytes)
+		_ = reqInJSON.UnmarshalJSONCustom(jsonBytes)
+		_ = reqInProtobuf.UnmarshalProtobuf(protobufBytes)
 
 		// compare unmarshal result
 		if !reflect.DeepEqual(reqInJSON, reqInProtobuf) {

@@ -65,9 +65,10 @@ func RequestHandler(path string, w http.ResponseWriter, r *http.Request) bool {
 
 func handleExportTraceServiceRequest(r *http.Request, w http.ResponseWriter, contentType string) {
 	startTime := time.Now()
-	if contentType == contentTypeProtobuf {
+	switch contentType {
+	case contentTypeProtobuf:
 		requestsProtobufTotal.Inc()
-	} else if contentType == contentTypeJSON {
+	case contentTypeJSON:
 		requestsJSONTotal.Inc()
 	}
 
@@ -101,11 +102,13 @@ func handleExportTraceServiceRequest(r *http.Request, w http.ResponseWriter, con
 	// update request duration only for successfully parsed requests
 	// There is no need in updating request duration for request errors,
 	// since their timings are usually much smaller than the timing for successful request parsing.
-	if contentType == contentTypeProtobuf {
+	switch contentType {
+	case contentTypeProtobuf:
 		requestProtobufDuration.UpdateDuration(startTime)
-	} else if contentType == contentTypeJSON {
+	case contentTypeJSON:
 		requestJSONDuration.UpdateDuration(startTime)
 	}
+
 }
 
 func pushExportTraceServiceRequest(data []byte, lmp insertutil.LogMessageProcessor, contentType string) error {
