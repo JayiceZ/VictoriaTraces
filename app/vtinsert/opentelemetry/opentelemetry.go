@@ -27,7 +27,7 @@ var (
 	errorsJSONTotal       = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
 
 	requestProtobufDuration = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
-	requestJSONDuration     = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
+	requestJSONDuration     = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="json"}`)
 )
 
 var (
@@ -51,25 +51,39 @@ func RequestHandler(path string, w http.ResponseWriter, r *http.Request) bool {
 	// use the same path as opentelemetry collector
 	// https://opentelemetry.io/docs/specs/otlp/#otlphttp-request
 	case "/insert/opentelemetry/v1/traces":
-		contentType := r.Header.Get("Content-Type")
-		if contentType != contentTypeJSON && contentType != contentTypeProtobuf {
-			httpserver.Errorf(w, r, "Content-Type %s isn't supported for opentelemetry format. Use protobuf or JSON encoding", contentType)
-			return true
-		}
-		handleExportTraceServiceRequest(r, w, contentType)
+		handleInsertTracesRequest(r, w)
 		return true
 	default:
 		return false
 	}
 }
 
-func handleExportTraceServiceRequest(r *http.Request, w http.ResponseWriter, contentType string) {
+func handleInsertTracesRequest(r *http.Request, w http.ResponseWriter) {
 	startTime := time.Now()
+	var err error
+
+	contentType := r.Header.Get("Content-Type")
+	// update request duration only for successfully parsed requests
+	// There is no need in updating request duration for request errors,
+	// since their timings are usually much smaller than the timing for successful request parsing.
 	switch contentType {
 	case contentTypeProtobuf:
 		requestsProtobufTotal.Inc()
+		defer func() {
+			if err == nil {
+				requestProtobufDuration.UpdateDuration(startTime)
+			}
+		}()
 	case contentTypeJSON:
 		requestsJSONTotal.Inc()
+		defer func() {
+			if err == nil {
+				requestJSONDuration.UpdateDuration(startTime)
+			}
+		}()
+	default:
+		httpserver.Errorf(w, r, "Content-Type %s isn't supported for opentelemetry format. Use protobuf or JSON encoding", contentType)
+		return
 	}
 
 	cp, err := insertutil.GetCommonParams(r)
@@ -97,16 +111,6 @@ func handleExportTraceServiceRequest(r *http.Request, w http.ResponseWriter, con
 	if err != nil {
 		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
 		return
-	}
-
-	// update request duration only for successfully parsed requests
-	// There is no need in updating request duration for request errors,
-	// since their timings are usually much smaller than the timing for successful request parsing.
-	switch contentType {
-	case contentTypeProtobuf:
-		requestProtobufDuration.UpdateDuration(startTime)
-	case contentTypeJSON:
-		requestJSONDuration.UpdateDuration(startTime)
 	}
 
 }
