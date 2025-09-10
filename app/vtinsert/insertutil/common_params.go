@@ -51,15 +51,15 @@ func GetCommonParams(r *http.Request) (*CommonParams, error) {
 
 	var isTimeFieldSet bool
 	timeFields := []string{"_time"}
-	if tfs := httputil.GetArray(r, "_time_field", "VL-Time-Field"); len(tfs) > 0 {
+	if tfs := httputil.GetArray(r, "_time_field", "VT-Time-Field"); len(tfs) > 0 {
 		isTimeFieldSet = true
 		timeFields = tfs
 	}
 
-	msgFields := httputil.GetArray(r, "_msg_field", "VL-Msg-Field")
-	streamFields := httputil.GetArray(r, "_stream_fields", "VL-Stream-Fields")
-	ignoreFields := httputil.GetArray(r, "ignore_fields", "VL-Ignore-Fields")
-	decolorizeFields := httputil.GetArray(r, "decolorize_fields", "VL-Decolorize-Fields")
+	msgFields := httputil.GetArray(r, "_msg_field", "VT-Msg-Field")
+	streamFields := httputil.GetArray(r, "_stream_fields", "VT-Stream-Fields")
+	ignoreFields := httputil.GetArray(r, "ignore_fields", "VT-Ignore-Fields")
+	decolorizeFields := httputil.GetArray(r, "decolorize_fields", "VT-Decolorize-Fields")
 
 	extraFields, err := getExtraFields(r)
 	if err != nil {
