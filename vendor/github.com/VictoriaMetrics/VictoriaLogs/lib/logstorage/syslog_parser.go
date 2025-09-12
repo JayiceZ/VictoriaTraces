@@ -414,31 +414,33 @@ func (p *SyslogParser) parseRFC3164(s string) {
 
 	p.AddField("format", "rfc3164")
 
-	// Parse timestamp
+	// Parse timestamp: prefer classic RFC3164
 	n := len(time.Stamp)
 	if len(s) < n {
 		p.AddField("message", s)
 		return
 	}
 
-	t, err := time.Parse(time.Stamp, s[:n])
-	if err != nil {
-		// TODO: fall back to parsing ISO8601 timestamp?
-		p.AddField("message", s)
-		return
+	if s[len("2006-01-02")] != 'T' {
+		// Parse RFC3164 timestamp.
+		if !p.tryParseTimestampRFC3164(s[:n]) {
+			p.AddField("message", s)
+			return
+		}
+	} else {
+		// Parse RFC3339 timestamp.
+		// See https://github.com/VictoriaMetrics/VictoriaLogs/issues/303
+		n = strings.IndexByte(s, ' ')
+		if n < 0 {
+			p.AddField("message", s)
+			return
+		}
+		if !p.tryParseTimestampRFC3339Nano(s[:n]) {
+			p.AddField("message", s)
+			return
+		}
 	}
 	s = s[n:]
-
-	t = t.UTC()
-	t = time.Date(p.currentYear, t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), p.timezone)
-	if uint64(t.Unix())-24*3600 > fasttime.UnixTimestamp() {
-		// Adjust time to the previous year
-		t = time.Date(t.Year()-1, t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), p.timezone)
-	}
-
-	bufLen := len(p.buf)
-	p.buf = marshalTimestampISO8601String(p.buf, t.UnixNano())
-	p.AddField("timestamp", bytesutil.ToUnsafeString(p.buf[bufLen:]))
 
 	if len(s) == 0 || s[0] != ' ' {
 		// Missing space after the time field
@@ -452,11 +454,26 @@ func (p *SyslogParser) parseRFC3164(s string) {
 	// Parse hostname
 	n = strings.IndexByte(s, ' ')
 	if n < 0 {
-		p.AddField("hostname", s)
-		return
+		// If there is no space, the remainder could be either hostname or tag.
+		// Detect common tag patterns (contains ':' or '['). If detected, skip hostname assignment
+		// and let the tag parsing below handle it.
+		candidate := s
+		if strings.ContainsAny(candidate, ":[") {
+			// no hostname; continue without consuming s
+		} else {
+			p.AddField("hostname", s)
+			return
+		}
+	} else {
+		candidate := s[:n]
+		if strings.ContainsAny(candidate, ":[") {
+			// The token after timestamp looks like a tag (e.g. "app[pid]:").
+			// Treat as missing hostname and do not consume it; proceed to tag parsing with s unchanged.
+		} else {
+			p.AddField("hostname", candidate)
+			s = s[n+1:]
+		}
 	}
-	p.AddField("hostname", s[:n])
-	s = s[n+1:]
 
 	// Parse tag (aka app_name)
 	n = strings.IndexAny(s, "[: ")
@@ -488,4 +505,34 @@ func (p *SyslogParser) parseRFC3164(s string) {
 	if len(s) > 0 {
 		p.AddField("message", s)
 	}
+}
+
+func (p *SyslogParser) tryParseTimestampRFC3164(s string) bool {
+	t, err := time.Parse(time.Stamp, s)
+	if err != nil {
+		return false
+	}
+
+	t = t.UTC()
+	t = time.Date(p.currentYear, t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), p.timezone)
+	if uint64(t.Unix())-24*3600 > fasttime.UnixTimestamp() {
+		// Adjust time to the previous year
+		t = time.Date(t.Year()-1, t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), p.timezone)
+	}
+	bufLen := len(p.buf)
+	p.buf = marshalTimestampRFC3339NanoString(p.buf, t.UnixNano())
+	p.AddField("timestamp", bytesutil.ToUnsafeString(p.buf[bufLen:]))
+	return true
+}
+
+func (p *SyslogParser) tryParseTimestampRFC3339Nano(s string) bool {
+	nsecs, ok := TryParseTimestampRFC3339Nano(s)
+	if !ok {
+		return false
+	}
+
+	bufLen := len(p.buf)
+	p.buf = marshalTimestampRFC3339NanoString(p.buf, nsecs)
+	p.AddField("timestamp", bytesutil.ToUnsafeString(p.buf[bufLen:]))
+	return true
 }

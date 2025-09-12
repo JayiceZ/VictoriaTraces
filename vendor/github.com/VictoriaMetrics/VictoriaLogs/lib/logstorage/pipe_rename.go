@@ -41,6 +41,12 @@ func (pr *pipeRename) canLiveTail() bool {
 	return true
 }
 
+func (pr *pipeRename) canReturnLastNResults() bool {
+	// TODO: properly verify that the _time field isn't overwritten by non-timestamp.
+
+	return true
+}
+
 func (pr *pipeRename) updateNeededFields(pf *prefixfilter.Filter) {
 	for i := len(pr.srcFieldFilters) - 1; i >= 0; i-- {
 		srcFieldFilter := pr.srcFieldFilters[i]
