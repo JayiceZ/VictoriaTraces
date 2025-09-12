@@ -67,7 +67,7 @@ func GetCommonParams(r *http.Request) (*CommonParams, error) {
 	}
 
 	debug := false
-	if dv := httputil.GetRequestValue(r, "debug", "VL-Debug"); dv != "" {
+	if dv := httputil.GetRequestValue(r, "debug", "VT-Debug"); dv != "" {
 		debug, err = strconv.ParseBool(dv)
 		if err != nil {
 			return nil, fmt.Errorf("cannot parse debug=%q: %w", dv, err)
@@ -99,7 +99,7 @@ func GetCommonParams(r *http.Request) (*CommonParams, error) {
 }
 
 func getExtraFields(r *http.Request) ([]logstorage.Field, error) {
-	efs := httputil.GetArray(r, "extra_fields", "VL-Extra-Fields")
+	efs := httputil.GetArray(r, "extra_fields", "VT-Extra-Fields")
 	if len(efs) == 0 {
 		return nil, nil
 	}
