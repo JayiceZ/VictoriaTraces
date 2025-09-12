@@ -1,7 +1,6 @@
 package vtstorage
 
 import (
-	"context"
 	"fmt"
 	"sort"
 	"strings"
@@ -11,10 +10,13 @@ import (
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/slicesutil"
 )
 
-func runOptimizedLastNResultsQuery(ctx context.Context, tenantIDs []logstorage.TenantID, q *logstorage.Query, limit uint64, writeBlock logstorage.WriteDataBlockFunc) error {
-	rows, err := getLastNQueryResults(ctx, tenantIDs, q, limit)
+func runOptimizedLastNResultsQuery(qctx *logstorage.QueryContext, offset, limit uint64, writeBlock logstorage.WriteDataBlockFunc) error {
+	rows, err := getLastNQueryResults(qctx, offset+limit)
 	if err != nil {
 		return err
+	}
+	if uint64(len(rows)) > offset {
+		rows = rows[offset:]
 	}
 
 	var db logstorage.DataBlock
@@ -34,13 +36,14 @@ func runOptimizedLastNResultsQuery(ctx context.Context, tenantIDs []logstorage.T
 	return nil
 }
 
-func getLastNQueryResults(ctx context.Context, tenantIDs []logstorage.TenantID, q *logstorage.Query, limit uint64) ([]logRow, error) {
-	qOrig := q
+func getLastNQueryResults(qctx *logstorage.QueryContext, limit uint64) ([]logRow, error) {
+	qOrig := qctx.Query
 	timestamp := qOrig.GetTimestamp()
 
-	q = qOrig.Clone(timestamp)
-	q.AddPipeLimit(2 * limit)
-	rows, err := getQueryResults(ctx, tenantIDs, q)
+	q := qOrig.Clone(timestamp)
+	q.AddPipeOffsetLimit(0, 2*limit)
+	qctxLocal := qctx.WithQuery(q)
+	rows, err := getQueryResults(qctxLocal)
 	if err != nil {
 		return nil, err
 	}
@@ -57,18 +60,22 @@ func getLastNQueryResults(ctx context.Context, tenantIDs []logstorage.TenantID, 
 	n := limit
 
 	var rowsFound []logRow
+	var lastNonEmptyRows []logRow
 
 	for {
 		q = qOrig.CloneWithTimeFilter(timestamp, start, end)
-		q.AddPipeLimit(2 * n)
-		rows, err := getQueryResults(ctx, tenantIDs, q)
+		q.AddPipeOffsetLimit(0, 2*n)
+		qctxLocal := qctx.WithQuery(q)
+		rows, err := getQueryResults(qctxLocal)
 		if err != nil {
 			return nil, err
 		}
 
 		if d == 0 || start >= end {
-			// The [start ... end] time range equals to one nanosecond, e.g. it cannot be adjusted more. Return up to limit rows.
+			// The [start ... end] time range equals to one nanosecond, e.g. it cannot be adjusted more. Return up to limit rows
+			// from the found rows and the last non-empty rows.
 			rowsFound = append(rowsFound, rows...)
+			rowsFound = append(rowsFound, lastNonEmptyRows...)
 			rowsFound = getLastNRows(rowsFound, limit)
 			return rowsFound, nil
 		}
@@ -80,6 +87,7 @@ func getLastNQueryResults(ctx context.Context, tenantIDs []logstorage.TenantID, 
 			// The number of found rows on the [start ... end] time range exceeds 2*n,
 			// so reduce the time range to further to [start+d ... end].
 			start += d
+			lastNonEmptyRows = rows
 			continue
 		}
 		if uint64(len(rows)) >= n {
@@ -102,7 +110,7 @@ func getLastNQueryResults(ctx context.Context, tenantIDs []logstorage.TenantID, 
 	}
 }
 
-func getQueryResults(ctx context.Context, tenantIDs []logstorage.TenantID, q *logstorage.Query) ([]logRow, error) {
+func getQueryResults(qctx *logstorage.QueryContext) ([]logRow, error) {
 	var rowsLock sync.Mutex
 	var rows []logRow
 
@@ -122,7 +130,7 @@ func getQueryResults(ctx context.Context, tenantIDs []logstorage.TenantID, q *lo
 		rowsLock.Unlock()
 	}
 
-	err := RunQuery(ctx, tenantIDs, q, writeBlock)
+	err := RunQuery(qctx, writeBlock)
 	if errLocal != nil {
 		return nil, errLocal
 	}
@@ -169,13 +177,13 @@ type logRow struct {
 func getLastNRows(rows []logRow, limit uint64) []logRow {
 	sortLogRows(rows)
 	if uint64(len(rows)) > limit {
-		rows = rows[uint64(len(rows))-limit:]
+		rows = rows[:limit]
 	}
 	return rows
 }
 
 func sortLogRows(rows []logRow) {
 	sort.Slice(rows, func(i, j int) bool {
-		return rows[i].timestamp < rows[j].timestamp
+		return rows[i].timestamp > rows[j].timestamp
 	})
 }
