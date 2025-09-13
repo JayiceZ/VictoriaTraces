@@ -1,0 +1,13 @@
+# route requests for the VictoriaTraces cluster - vtinsert(s) and vtselect(s)
+unauthorized_user:
+  url_map:
+  - src_paths:
+    - "/select/.*"
+    url_prefix:
+    - http://vtselect-1:10428
+    - http://vtselect-2:10428
+  - src_paths:
+    - "/insert/.*"
+    url_prefix:
+    - http://vtinsert-1:10428
+    - http://vtinsert-2:10428

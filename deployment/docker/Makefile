@@ -219,3 +219,10 @@ docker-vt-single-up:
 
 docker-vt-single-down:
 	$(DOCKER_COMPOSE) -f deployment/docker/compose-vt-single.yml down -v
+
+# VT single
+docker-vt-cluster-up:
+	$(DOCKER_COMPOSE) -f deployment/docker/compose-vt-cluster.yml up -d
+
+docker-vt-cluster-down:
+	$(DOCKER_COMPOSE) -f deployment/docker/compose-vt-cluster.yml down -v
