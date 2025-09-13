@@ -26,8 +26,8 @@ var (
 	requestsJSONTotal     = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
 	errorsJSONTotal       = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
 
-	requestProtobufDuration = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
-	requestJSONDuration     = metrics.NewHistogram(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="json"}`)
+	requestProtobufDuration = metrics.NewSummary(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
+  requestJSONDuration     = metrics.NewSummary(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="json"}`)
 )
 
 var (

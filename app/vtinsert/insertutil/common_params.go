@@ -51,15 +51,15 @@ func GetCommonParams(r *http.Request) (*CommonParams, error) {
 
 	var isTimeFieldSet bool
 	timeFields := []string{"_time"}
-	if tfs := httputil.GetArray(r, "_time_field", "VL-Time-Field"); len(tfs) > 0 {
+	if tfs := httputil.GetArray(r, "_time_field", "VT-Time-Field"); len(tfs) > 0 {
 		isTimeFieldSet = true
 		timeFields = tfs
 	}
 
-	msgFields := httputil.GetArray(r, "_msg_field", "VL-Msg-Field")
-	streamFields := httputil.GetArray(r, "_stream_fields", "VL-Stream-Fields")
-	ignoreFields := httputil.GetArray(r, "ignore_fields", "VL-Ignore-Fields")
-	decolorizeFields := httputil.GetArray(r, "decolorize_fields", "VL-Decolorize-Fields")
+	msgFields := httputil.GetArray(r, "_msg_field", "VT-Msg-Field")
+	streamFields := httputil.GetArray(r, "_stream_fields", "VT-Stream-Fields")
+	ignoreFields := httputil.GetArray(r, "ignore_fields", "VT-Ignore-Fields")
+	decolorizeFields := httputil.GetArray(r, "decolorize_fields", "VT-Decolorize-Fields")
 
 	extraFields, err := getExtraFields(r)
 	if err != nil {
@@ -67,7 +67,7 @@ func GetCommonParams(r *http.Request) (*CommonParams, error) {
 	}
 
 	debug := false
-	if dv := httputil.GetRequestValue(r, "debug", "VL-Debug"); dv != "" {
+	if dv := httputil.GetRequestValue(r, "debug", "VT-Debug"); dv != "" {
 		debug, err = strconv.ParseBool(dv)
 		if err != nil {
 			return nil, fmt.Errorf("cannot parse debug=%q: %w", dv, err)
@@ -99,7 +99,7 @@ func GetCommonParams(r *http.Request) (*CommonParams, error) {
 }
 
 func getExtraFields(r *http.Request) ([]logstorage.Field, error) {
-	efs := httputil.GetArray(r, "extra_fields", "VL-Extra-Fields")
+	efs := httputil.GetArray(r, "extra_fields", "VT-Extra-Fields")
 	if len(efs) == 0 {
 		return nil, nil
 	}

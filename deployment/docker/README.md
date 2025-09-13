@@ -8,13 +8,14 @@ to the Internet.
 
 * Traces:
   * [VictoriaTraces single server](#victoriaTraces-server)
+  * [VictoriaTraces cluster](#victoriaTraces-cluster)
 * [Common](#common-components)
   * [Grafana](#grafana)
 * [Troubleshooting](#troubleshooting)
 
 ## VictoriaTraces server
 
-To spin-up environment with [VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) run the following command:
+To spin-up environment with [VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/), run the following command:
 ```sh
 # clone VictoriaTraces
 git clone https://github.com/VictoriaMetrics/VictoriaTraces.git
@@ -48,7 +49,48 @@ To shut down environment execute the following command:
 make docker-vt-single-down
 ```
 
+## VictoriaTraces cluster
+
+To spin-up environment with [VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) **cluster**, run the following command:
+```sh
+# start docker compose
+make docker-vt-cluster-up
+```
+_See [compose-vt-cluster.yml](https://github.com/VictoriaMetrics/VictoriaTraces/blob/master/deployment/docker/compose-vt-cluster.yml)_
+
+VictoriaTraces cluster environment consists of `vtinsert`, `vtstorage` and `vtselect` components.
+`vtinsert` and `vtselect` are available through `vmauth` on port `:8427`.
+For example, `HotROD` pushes trace spans via `http://vmauth:8427/insert/opentelemetry/v1/traces` path,
+and Grafana queries `http://vmauth:8427/select/jaeger/` for datasource queries.
+
+In addition to VictoriaTraces cluster, the docker compose contains the following components:
+* [HotROD](https://hub.docker.com/r/jaegertracing/example-hotrod) application to generate trace data.
+* `VictoriaMetrics single-node` to collect metrics from all the components.
+* [Grafana](#grafana) is configured with [VictoriaMetrics](https://github.com/VictoriaMetrics/victoriametrics-datasource) and Jaeger datasource pointing to VictoriaTraces cluster (vmauth).
+* [vmauth](#vmauth) balances incoming read and write requests among `vtselect`s and `vtinsert`s;
+* [vmalert](#vmalert) is configured to query `vtselect` (vmauth), and send alerts state and recording rules results to `VictoriaMetrics single-node`.
+* [alertmanager](#alertmanager) is configured to receive notifications from `vmalert`.
+
+To generate trace data, you need to access HotROD at [http://localhost:8080](http://localhost:8080), and **click any button on the page**.
+
+To access Grafana, use link [http://localhost:3000](http://localhost:3000).
+
+To access [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui),
+use link [http://localhost:8427/select/vmui](http://localhost:8427/select/vmui).
+
+To shut down environment execute the following command:
+```
+make docker-vt-cluster-down
+```
+
 # Common components
+
+## vmauth
+
+[vmauth](https://docs.victoriametrics.com/victoriametrics/vmauth/) acts as a [load balancer](https://docs.victoriametrics.com/victoriametrics/vmauth/#load-balancing)
+to spread the load across `vtselect` and `vtinsert` nodes. [Grafana](#grafana) and [vmalert](#vmalert) use vmauth for read queries.
+vmauth routes read queries to VictoriaTraces depending on requested path.
+vmauth config is available here for [VictoriaTraces cluster](https://github.com/VictoriaMetrics/VictoriaTraces/blob/master/deployment/docker/auth-vt-cluster.yml).
 
 ## vmalert
 
