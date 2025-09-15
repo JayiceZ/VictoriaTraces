@@ -51,7 +51,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 6,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -83,8 +83,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -118,7 +117,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -155,8 +154,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -190,7 +188,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -227,8 +225,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -262,7 +259,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -299,8 +296,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -334,7 +330,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -371,8 +367,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -406,7 +401,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -449,7 +444,7 @@
         "content": "<div style=\"text-align: center;\">$version</div>",
         "mode": "markdown"
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "title": "Version",
       "type": "text"
     },
@@ -469,8 +464,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -504,7 +498,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -541,8 +535,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -576,7 +569,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -613,8 +606,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -648,7 +640,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -685,8 +677,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               }
             ]
           },
@@ -720,7 +711,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -763,8 +754,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -825,7 +815,7 @@
           }
         ]
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -899,8 +889,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -936,7 +925,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1070,8 +1059,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1125,7 +1113,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1209,8 +1197,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1248,7 +1235,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1319,8 +1306,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1355,7 +1341,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1444,8 +1430,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1483,7 +1468,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1553,8 +1538,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1592,7 +1576,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1661,8 +1645,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1699,7 +1682,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1783,8 +1766,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1820,7 +1802,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1889,8 +1871,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1928,7 +1909,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -1971,8 +1952,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2039,7 +2019,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -2110,8 +2090,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": 0
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2149,7 +2128,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
@@ -2230,7 +2209,7 @@
             "h": 5,
             "w": 7,
             "x": 0,
-            "y": 58
+            "y": 314
           },
           "id": 134,
           "maxDataPoints": 100,
@@ -2342,7 +2321,7 @@
             "h": 10,
             "w": 17,
             "x": 7,
-            "y": 58
+            "y": 314
           },
           "id": 136,
           "options": {
@@ -2412,7 +2391,7 @@
             "h": 5,
             "w": 7,
             "x": 0,
-            "y": 63
+            "y": 319
           },
           "id": 135,
           "maxDataPoints": 100,
@@ -2523,7 +2502,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 68
+            "y": 324
           },
           "id": 137,
           "options": {
@@ -2662,7 +2641,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 68
+            "y": 324
           },
           "id": 44,
           "options": {
@@ -2776,7 +2755,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 76
+            "y": 332
           },
           "id": 138,
           "options": {
@@ -2902,7 +2881,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 76
+            "y": 332
           },
           "id": 144,
           "options": {
@@ -3039,7 +3018,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 84
+            "y": 340
           },
           "id": 140,
           "options": {
@@ -3182,7 +3161,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 84
+            "y": 340
           },
           "id": 145,
           "options": {
@@ -3305,7 +3284,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 92
+            "y": 348
           },
           "id": 141,
           "options": {
@@ -3429,7 +3408,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 92
+            "y": 348
           },
           "id": 143,
           "options": {
@@ -3554,7 +3533,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 100
+            "y": 356
           },
           "id": 146,
           "options": {
@@ -3664,7 +3643,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 100
+            "y": 356
           },
           "id": 148,
           "options": {
@@ -3773,7 +3752,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 108
+            "y": 364
           },
           "id": 147,
           "options": {
@@ -3883,7 +3862,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 108
+            "y": 364
           },
           "id": 149,
           "options": {
@@ -3993,7 +3972,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 116
+            "y": 372
           },
           "id": 74,
           "options": {
@@ -4102,7 +4081,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 116
+            "y": 372
           },
           "id": 61,
           "options": {
@@ -4207,7 +4186,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 124
+            "y": 380
           },
           "id": 75,
           "options": {
@@ -4330,7 +4309,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 133
+            "y": 389
           },
           "id": 116,
           "options": {
@@ -5121,7 +5100,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 133
+            "y": 389
           },
           "id": 117,
           "options": {
@@ -5277,7 +5256,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 141
+            "y": 397
           },
           "id": 209,
           "options": {
@@ -5402,7 +5381,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 141
+            "y": 397
           },
           "id": 129,
           "options": {
@@ -5513,7 +5492,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 149
+            "y": 405
           },
           "id": 101,
           "options": {
@@ -5639,7 +5618,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 149
+            "y": 405
           },
           "id": 102,
           "options": {
@@ -5777,7 +5756,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 157
+            "y": 413
           },
           "id": 100,
           "options": {
@@ -5886,7 +5865,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 157
+            "y": 413
           },
           "id": 202,
           "options": {
@@ -5990,7 +5969,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 165
+            "y": 421
           },
           "id": 112,
           "options": {
@@ -6113,7 +6092,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 165
+            "y": 421
           },
           "id": 98,
           "options": {
@@ -6223,7 +6202,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 173
+            "y": 429
           },
           "id": 118,
           "options": {
@@ -6335,7 +6314,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 173
+            "y": 429
           },
           "id": 103,
           "options": {
@@ -6446,7 +6425,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 181
+            "y": 437
           },
           "id": 104,
           "options": {
@@ -6572,7 +6551,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 181
+            "y": 437
           },
           "id": 205,
           "options": {
@@ -6681,7 +6660,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 189
+            "y": 445
           },
           "id": 200,
           "options": {
@@ -6744,7 +6723,7 @@
             "h": 8,
             "w": 3,
             "x": 0,
-            "y": 196
+            "y": 452
           },
           "id": 90,
           "maxDataPoints": 100,
@@ -6853,7 +6832,7 @@
             "h": 8,
             "w": 9,
             "x": 3,
-            "y": 196
+            "y": 452
           },
           "id": 91,
           "options": {
@@ -6963,7 +6942,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 196
+            "y": 452
           },
           "id": 93,
           "options": {
@@ -7072,7 +7051,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 204
+            "y": 460
           },
           "id": 94,
           "options": {
@@ -7182,7 +7161,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 204
+            "y": 460
           },
           "id": 95,
           "options": {
@@ -7229,7 +7208,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -7237,1838 +7216,1827 @@
         "y": 59
       },
       "id": 109,
-      "panels": [
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "CPU utilization per instance as a fraction of available cores. Sustained values above 80% indicate CPU saturation; correlate with CPU PSI and query latency.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic-by-name"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "line"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "max": 1,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 1
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 134
-          },
-          "id": 206,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "0": "m",
-              "1": "a",
-              "2": "x",
-              "3": "(",
-              "4": "\n",
-              "5": " ",
-              "6": " ",
-              "7": "r",
-              "8": "a",
-              "9": "t",
-              "10": "e",
-              "11": "(",
-              "12": "\n",
-              "13": " ",
-              "14": " ",
-              "15": " ",
-              "16": " ",
-              "17": "p",
-              "18": "r",
-              "19": "o",
-              "20": "c",
-              "21": "e",
-              "22": "s",
-              "23": "s",
-              "24": "_",
-              "25": "c",
-              "26": "p",
-              "27": "u",
-              "28": "_",
-              "29": "s",
-              "30": "e",
-              "31": "c",
-              "32": "o",
-              "33": "n",
-              "34": "d",
-              "35": "s",
-              "36": "_",
-              "37": "t",
-              "38": "o",
-              "39": "t",
-              "40": "a",
-              "41": "l",
-              "42": "{",
-              "43": "j",
-              "44": "o",
-              "45": "b",
-              "46": "=",
-              "47": "~",
-              "48": "\"",
-              "49": "$",
-              "50": "j",
-              "51": "o",
-              "52": "b",
-              "53": "\"",
-              "54": ",",
-              "55": "i",
-              "56": "n",
-              "57": "s",
-              "58": "t",
-              "59": "a",
-              "60": "n",
-              "61": "c",
-              "62": "e",
-              "63": "=",
-              "64": "~",
-              "65": "\"",
-              "66": "$",
-              "67": "i",
-              "68": "n",
-              "69": "s",
-              "70": "t",
-              "71": "a",
-              "72": "n",
-              "73": "c",
-              "74": "e",
-              "75": "_",
-              "76": "s",
-              "77": "t",
-              "78": "o",
-              "79": "r",
-              "80": "a",
-              "81": "g",
-              "82": "e",
-              "83": "\"",
-              "84": "}",
-              "85": "[",
-              "86": "t",
-              "87": "m",
-              "88": "p",
-              "89": "_",
-              "90": "v",
-              "91": "i",
-              "92": "c",
-              "93": "t",
-              "94": "o",
-              "95": "r",
-              "96": "i",
-              "97": "a",
-              "98": "m",
-              "99": "e",
-              "100": "t",
-              "101": "r",
-              "102": "i",
-              "103": "c",
-              "104": "s",
-              "105": "_",
-              "106": "p",
-              "107": "r",
-              "108": "e",
-              "109": "t",
-              "110": "t",
-              "111": "i",
-              "112": "f",
-              "113": "y",
-              "114": "_",
-              "115": "q",
-              "116": "u",
-              "117": "e",
-              "118": "r",
-              "119": "y",
-              "120": "_",
-              "121": "_",
-              "122": "r",
-              "123": "a",
-              "124": "t",
-              "125": "e",
-              "126": "_",
-              "127": "i",
-              "128": "n",
-              "129": "t",
-              "130": "e",
-              "131": "r",
-              "132": "v",
-              "133": "a",
-              "134": "l",
-              "135": "]",
-              "136": "\n",
-              "137": " ",
-              "138": " ",
-              "139": ")",
-              "140": "\n",
-              "141": " ",
-              "142": " ",
-              "143": " ",
-              "144": " ",
-              "145": "/",
-              "146": "\n",
-              "147": " ",
-              "148": " ",
-              "149": "p",
-              "150": "r",
-              "151": "o",
-              "152": "c",
-              "153": "e",
-              "154": "s",
-              "155": "s",
-              "156": "_",
-              "157": "c",
-              "158": "p",
-              "159": "u",
-              "160": "_",
-              "161": "c",
-              "162": "o",
-              "163": "r",
-              "164": "e",
-              "165": "s",
-              "166": "_",
-              "167": "a",
-              "168": "v",
-              "169": "a",
-              "170": "i",
-              "171": "l",
-              "172": "a",
-              "173": "b",
-              "174": "l",
-              "175": "e",
-              "176": "{",
-              "177": "j",
-              "178": "o",
-              "179": "b",
-              "180": "=",
-              "181": "~",
-              "182": "\"",
-              "183": "$",
-              "184": "j",
-              "185": "o",
-              "186": "b",
-              "187": "\"",
-              "188": ",",
-              "189": "i",
-              "190": "n",
-              "191": "s",
-              "192": "t",
-              "193": "a",
-              "194": "n",
-              "195": "c",
-              "196": "e",
-              "197": "=",
-              "198": "~",
-              "199": "\"",
-              "200": "$",
-              "201": "i",
-              "202": "n",
-              "203": "s",
-              "204": "t",
-              "205": "a",
-              "206": "n",
-              "207": "c",
-              "208": "e",
-              "209": "_",
-              "210": "s",
-              "211": "t",
-              "212": "o",
-              "213": "r",
-              "214": "a",
-              "215": "g",
-              "216": "e",
-              "217": "\"",
-              "218": "}",
-              "219": "\n",
-              "220": ")",
-              "editorMode": "code",
-              "expr": "max(\n  rate(process_cpu_seconds_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])\n  /\n  process_cpu_cores_available{job=~\"$job\", instance=~\"$instance_insert\"}\n)",
-              "legendFormat": "max",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "0": "m",
-              "1": "a",
-              "2": "x",
-              "3": "(",
-              "4": "\n",
-              "5": " ",
-              "6": " ",
-              "7": "r",
-              "8": "a",
-              "9": "t",
-              "10": "e",
-              "11": "(",
-              "12": "\n",
-              "13": " ",
-              "14": " ",
-              "15": " ",
-              "16": " ",
-              "17": "p",
-              "18": "r",
-              "19": "o",
-              "20": "c",
-              "21": "e",
-              "22": "s",
-              "23": "s",
-              "24": "_",
-              "25": "c",
-              "26": "p",
-              "27": "u",
-              "28": "_",
-              "29": "s",
-              "30": "e",
-              "31": "c",
-              "32": "o",
-              "33": "n",
-              "34": "d",
-              "35": "s",
-              "36": "_",
-              "37": "t",
-              "38": "o",
-              "39": "t",
-              "40": "a",
-              "41": "l",
-              "42": "{",
-              "43": "j",
-              "44": "o",
-              "45": "b",
-              "46": "=",
-              "47": "~",
-              "48": "\"",
-              "49": "$",
-              "50": "j",
-              "51": "o",
-              "52": "b",
-              "53": "\"",
-              "54": ",",
-              "55": "i",
-              "56": "n",
-              "57": "s",
-              "58": "t",
-              "59": "a",
-              "60": "n",
-              "61": "c",
-              "62": "e",
-              "63": "=",
-              "64": "~",
-              "65": "\"",
-              "66": "$",
-              "67": "i",
-              "68": "n",
-              "69": "s",
-              "70": "t",
-              "71": "a",
-              "72": "n",
-              "73": "c",
-              "74": "e",
-              "75": "_",
-              "76": "s",
-              "77": "t",
-              "78": "o",
-              "79": "r",
-              "80": "a",
-              "81": "g",
-              "82": "e",
-              "83": "\"",
-              "84": "}",
-              "85": "[",
-              "86": "t",
-              "87": "m",
-              "88": "p",
-              "89": "_",
-              "90": "v",
-              "91": "i",
-              "92": "c",
-              "93": "t",
-              "94": "o",
-              "95": "r",
-              "96": "i",
-              "97": "a",
-              "98": "m",
-              "99": "e",
-              "100": "t",
-              "101": "r",
-              "102": "i",
-              "103": "c",
-              "104": "s",
-              "105": "_",
-              "106": "p",
-              "107": "r",
-              "108": "e",
-              "109": "t",
-              "110": "t",
-              "111": "i",
-              "112": "f",
-              "113": "y",
-              "114": "_",
-              "115": "q",
-              "116": "u",
-              "117": "e",
-              "118": "r",
-              "119": "y",
-              "120": "_",
-              "121": "_",
-              "122": "r",
-              "123": "a",
-              "124": "t",
-              "125": "e",
-              "126": "_",
-              "127": "i",
-              "128": "n",
-              "129": "t",
-              "130": "e",
-              "131": "r",
-              "132": "v",
-              "133": "a",
-              "134": "l",
-              "135": "]",
-              "136": "\n",
-              "137": " ",
-              "138": " ",
-              "139": ")",
-              "140": "\n",
-              "141": " ",
-              "142": " ",
-              "143": " ",
-              "144": " ",
-              "145": "/",
-              "146": "\n",
-              "147": " ",
-              "148": " ",
-              "149": "p",
-              "150": "r",
-              "151": "o",
-              "152": "c",
-              "153": "e",
-              "154": "s",
-              "155": "s",
-              "156": "_",
-              "157": "c",
-              "158": "p",
-              "159": "u",
-              "160": "_",
-              "161": "c",
-              "162": "o",
-              "163": "r",
-              "164": "e",
-              "165": "s",
-              "166": "_",
-              "167": "a",
-              "168": "v",
-              "169": "a",
-              "170": "i",
-              "171": "l",
-              "172": "a",
-              "173": "b",
-              "174": "l",
-              "175": "e",
-              "176": "{",
-              "177": "j",
-              "178": "o",
-              "179": "b",
-              "180": "=",
-              "181": "~",
-              "182": "\"",
-              "183": "$",
-              "184": "j",
-              "185": "o",
-              "186": "b",
-              "187": "\"",
-              "188": ",",
-              "189": "i",
-              "190": "n",
-              "191": "s",
-              "192": "t",
-              "193": "a",
-              "194": "n",
-              "195": "c",
-              "196": "e",
-              "197": "=",
-              "198": "~",
-              "199": "\"",
-              "200": "$",
-              "201": "i",
-              "202": "n",
-              "203": "s",
-              "204": "t",
-              "205": "a",
-              "206": "n",
-              "207": "c",
-              "208": "e",
-              "209": "_",
-              "210": "s",
-              "211": "t",
-              "212": "o",
-              "213": "r",
-              "214": "a",
-              "215": "g",
-              "216": "e",
-              "217": "\"",
-              "218": "}",
-              "219": "\n",
-              "220": ")",
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "min(\n  rate(process_cpu_seconds_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])\n  /\n  process_cpu_cores_available{job=~\"$job\", instance=~\"$instance_insert\"}\n)",
-              "hide": false,
-              "legendFormat": "min",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "0": "m",
-              "1": "a",
-              "2": "x",
-              "3": "(",
-              "4": "\n",
-              "5": " ",
-              "6": " ",
-              "7": "r",
-              "8": "a",
-              "9": "t",
-              "10": "e",
-              "11": "(",
-              "12": "\n",
-              "13": " ",
-              "14": " ",
-              "15": " ",
-              "16": " ",
-              "17": "p",
-              "18": "r",
-              "19": "o",
-              "20": "c",
-              "21": "e",
-              "22": "s",
-              "23": "s",
-              "24": "_",
-              "25": "c",
-              "26": "p",
-              "27": "u",
-              "28": "_",
-              "29": "s",
-              "30": "e",
-              "31": "c",
-              "32": "o",
-              "33": "n",
-              "34": "d",
-              "35": "s",
-              "36": "_",
-              "37": "t",
-              "38": "o",
-              "39": "t",
-              "40": "a",
-              "41": "l",
-              "42": "{",
-              "43": "j",
-              "44": "o",
-              "45": "b",
-              "46": "=",
-              "47": "~",
-              "48": "\"",
-              "49": "$",
-              "50": "j",
-              "51": "o",
-              "52": "b",
-              "53": "\"",
-              "54": ",",
-              "55": "i",
-              "56": "n",
-              "57": "s",
-              "58": "t",
-              "59": "a",
-              "60": "n",
-              "61": "c",
-              "62": "e",
-              "63": "=",
-              "64": "~",
-              "65": "\"",
-              "66": "$",
-              "67": "i",
-              "68": "n",
-              "69": "s",
-              "70": "t",
-              "71": "a",
-              "72": "n",
-              "73": "c",
-              "74": "e",
-              "75": "_",
-              "76": "s",
-              "77": "t",
-              "78": "o",
-              "79": "r",
-              "80": "a",
-              "81": "g",
-              "82": "e",
-              "83": "\"",
-              "84": "}",
-              "85": "[",
-              "86": "t",
-              "87": "m",
-              "88": "p",
-              "89": "_",
-              "90": "v",
-              "91": "i",
-              "92": "c",
-              "93": "t",
-              "94": "o",
-              "95": "r",
-              "96": "i",
-              "97": "a",
-              "98": "m",
-              "99": "e",
-              "100": "t",
-              "101": "r",
-              "102": "i",
-              "103": "c",
-              "104": "s",
-              "105": "_",
-              "106": "p",
-              "107": "r",
-              "108": "e",
-              "109": "t",
-              "110": "t",
-              "111": "i",
-              "112": "f",
-              "113": "y",
-              "114": "_",
-              "115": "q",
-              "116": "u",
-              "117": "e",
-              "118": "r",
-              "119": "y",
-              "120": "_",
-              "121": "_",
-              "122": "r",
-              "123": "a",
-              "124": "t",
-              "125": "e",
-              "126": "_",
-              "127": "i",
-              "128": "n",
-              "129": "t",
-              "130": "e",
-              "131": "r",
-              "132": "v",
-              "133": "a",
-              "134": "l",
-              "135": "]",
-              "136": "\n",
-              "137": " ",
-              "138": " ",
-              "139": ")",
-              "140": "\n",
-              "141": " ",
-              "142": " ",
-              "143": " ",
-              "144": " ",
-              "145": "/",
-              "146": "\n",
-              "147": " ",
-              "148": " ",
-              "149": "p",
-              "150": "r",
-              "151": "o",
-              "152": "c",
-              "153": "e",
-              "154": "s",
-              "155": "s",
-              "156": "_",
-              "157": "c",
-              "158": "p",
-              "159": "u",
-              "160": "_",
-              "161": "c",
-              "162": "o",
-              "163": "r",
-              "164": "e",
-              "165": "s",
-              "166": "_",
-              "167": "a",
-              "168": "v",
-              "169": "a",
-              "170": "i",
-              "171": "l",
-              "172": "a",
-              "173": "b",
-              "174": "l",
-              "175": "e",
-              "176": "{",
-              "177": "j",
-              "178": "o",
-              "179": "b",
-              "180": "=",
-              "181": "~",
-              "182": "\"",
-              "183": "$",
-              "184": "j",
-              "185": "o",
-              "186": "b",
-              "187": "\"",
-              "188": ",",
-              "189": "i",
-              "190": "n",
-              "191": "s",
-              "192": "t",
-              "193": "a",
-              "194": "n",
-              "195": "c",
-              "196": "e",
-              "197": "=",
-              "198": "~",
-              "199": "\"",
-              "200": "$",
-              "201": "i",
-              "202": "n",
-              "203": "s",
-              "204": "t",
-              "205": "a",
-              "206": "n",
-              "207": "c",
-              "208": "e",
-              "209": "_",
-              "210": "s",
-              "211": "t",
-              "212": "o",
-              "213": "r",
-              "214": "a",
-              "215": "g",
-              "216": "e",
-              "217": "\"",
-              "218": "}",
-              "219": "\n",
-              "220": ")",
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "quantile(0.5,\n    rate(process_cpu_seconds_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])\n    /\n    process_cpu_cores_available{job=~\"$job\", instance=~\"$instance_insert\"}\n)",
-              "hide": false,
-              "legendFormat": "median",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "CPU % usage ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "99th percentile of insert operation duration. This represents the time it takes for 99% of insert operations to complete. High values indicate slow ingestion performance that could affect overall system throughput. Spikes may suggest storage bottlenecks, resource contention, or inefficient data processing.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 134
-          },
-          "id": 127,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "max(vt_http_request_duration_seconds{job=~\"$job\", instance=~\"$instance_insert_all\", quantile=\"0.99\"}) by (path) > 0",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "{{path}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "HTTP request duration p99 ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "Rate of incoming query requests by endpoint path. This metric tracks the query load on VictoriaTraces, including different query interfaces and internal operations. \n\nHigher rates indicate increased query activity from users or applications. Monitor for sudden spikes that might indicate new dashboards, automated queries, or potential performance issues. Sustained high rates may require scaling query processing capacity.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 142
-          },
-          "id": 130,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(vt_http_requests_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (path) > 0",
-              "format": "time_series",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "{{path}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "HTTP request rate ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "99th percentile response time for VictoriaTraces HTTP endpoints, grouped by instance and path. This means 99% of requests are faster than this value. **Lower numbers are better**, as they indicate faster responses and fewer slow requests.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(bytes)/"
-                },
-                "properties": [
-                  {
-                    "id": "custom.axisPlacement",
-                    "value": "right"
-                  },
-                  {
-                    "id": "unit",
-                    "value": "bytes"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 142
-          },
-          "id": 113,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(vt_rows_ingested_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (type) > 0",
-              "format": "time_series",
-              "hide": false,
-              "intervalFactor": 1,
-              "legendFormat": "{{type}}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(vt_bytes_ingested_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (type) > 0",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "{{type}} (bytes)",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Trace spans ingestion rate ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "Number of concurrent insert operations has reached the configured limit: `-maxConcurrentInserts` (default: 2x CPU cores)",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "limit"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 150
-          },
-          "id": 207,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "max(increase(vm_concurrent_insert_limit_reached_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (job)",
-              "format": "time_series",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "{{job}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Concurrent insert limit reached ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "Number of insert requests that timed out while waiting for available concurrency slots. This indicates sustained ingestion overload beyond configured limits.\n\nHigh values suggest:\n- Insert queue is consistently full\n- Insert requests waiting too long for execution slots\n- System under sustained heavy ingestion load\n- Need for horizontal scaling or ingestion optimization\n\nCombined with `Insert concurrency limit reached`, provides complete picture of ingestion rejection patterns.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "vis": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 1
-                  }
-                ]
-              },
-              "unit": "reqps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 150
-          },
-          "id": 203,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(vm_concurrent_insert_limit_timeout_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (job) > 0",
-              "interval": "",
-              "legendFormat": "{{job}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Insert timeouts ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "Number of active message processors handling trace span ingestion. These processors parse and process incoming trace spans before storage. The count typically correlates with the ingestion load.\n\nIf this number is unusually high or inflated (which is rare), check memory usage. It may indicate a heavy ingestion load or processing bottlenecks that could benefit from performance tuning.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic-by-name"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "decimals": 0,
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 158
-          },
-          "id": 114,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "max(max_over_time(vt_insert_processors_count{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (job)",
-              "format": "time_series",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "{{job}}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "max(max_over_time(vm_concurrent_insert_capacity{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval]))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "soft limit",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Message processors ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "99th percentile duration of flush operations in vtinsert by type (max across instances). Spikes imply slow disks or backpressure from remote storage.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 158
-          },
-          "id": 119,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(vt_insert_flush_duration_seconds{job=~\"$job\", instance=~\"$instance_insert\", quantile=\"0.99\"}) by (type) > 0",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "{{type}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Flush duration p99 ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "Number of active streams tracked by vtinsert per instance. Steady growth indicates increasing stream cardinality; review stream field design.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic-by-name"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 166
-          },
-          "id": 120,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(vt_insert_active_streams{job=~\"$job\", instance=~\"$instance_insert\"}) by (job)",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "{{job}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Tracked streams ($instance_insert)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "$ds"
-          },
-          "description": "Number of remote write send errors over the last 24 hours per vtinsert instance. Non‑zero values typically indicate connectivity issues, timeouts, or 4xx/5xx responses.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "fixedColor": "red",
-                "mode": "palette-classic-by-name"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "links": [],
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 166
-          },
-          "id": 121,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "victoriametrics-metrics-datasource",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "expr": "sum(increase(vt_insert_remote_send_errors_total{job=~\"$job\", instance=~\"$instance_insert\"}[24h])) by (job)",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "{{job}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Send errors over 24h ($instance_insert)",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "title": "vtinsert",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "CPU utilization per instance as a fraction of available cores. Sustained values above 80% indicate CPU saturation; correlate with CPU PSI and query latency.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 60
+      },
+      "id": 206,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "0": "m",
+          "1": "a",
+          "2": "x",
+          "3": "(",
+          "4": "\n",
+          "5": " ",
+          "6": " ",
+          "7": "r",
+          "8": "a",
+          "9": "t",
+          "10": "e",
+          "11": "(",
+          "12": "\n",
+          "13": " ",
+          "14": " ",
+          "15": " ",
+          "16": " ",
+          "17": "p",
+          "18": "r",
+          "19": "o",
+          "20": "c",
+          "21": "e",
+          "22": "s",
+          "23": "s",
+          "24": "_",
+          "25": "c",
+          "26": "p",
+          "27": "u",
+          "28": "_",
+          "29": "s",
+          "30": "e",
+          "31": "c",
+          "32": "o",
+          "33": "n",
+          "34": "d",
+          "35": "s",
+          "36": "_",
+          "37": "t",
+          "38": "o",
+          "39": "t",
+          "40": "a",
+          "41": "l",
+          "42": "{",
+          "43": "j",
+          "44": "o",
+          "45": "b",
+          "46": "=",
+          "47": "~",
+          "48": "\"",
+          "49": "$",
+          "50": "j",
+          "51": "o",
+          "52": "b",
+          "53": "\"",
+          "54": ",",
+          "55": "i",
+          "56": "n",
+          "57": "s",
+          "58": "t",
+          "59": "a",
+          "60": "n",
+          "61": "c",
+          "62": "e",
+          "63": "=",
+          "64": "~",
+          "65": "\"",
+          "66": "$",
+          "67": "i",
+          "68": "n",
+          "69": "s",
+          "70": "t",
+          "71": "a",
+          "72": "n",
+          "73": "c",
+          "74": "e",
+          "75": "_",
+          "76": "s",
+          "77": "t",
+          "78": "o",
+          "79": "r",
+          "80": "a",
+          "81": "g",
+          "82": "e",
+          "83": "\"",
+          "84": "}",
+          "85": "[",
+          "86": "t",
+          "87": "m",
+          "88": "p",
+          "89": "_",
+          "90": "v",
+          "91": "i",
+          "92": "c",
+          "93": "t",
+          "94": "o",
+          "95": "r",
+          "96": "i",
+          "97": "a",
+          "98": "m",
+          "99": "e",
+          "100": "t",
+          "101": "r",
+          "102": "i",
+          "103": "c",
+          "104": "s",
+          "105": "_",
+          "106": "p",
+          "107": "r",
+          "108": "e",
+          "109": "t",
+          "110": "t",
+          "111": "i",
+          "112": "f",
+          "113": "y",
+          "114": "_",
+          "115": "q",
+          "116": "u",
+          "117": "e",
+          "118": "r",
+          "119": "y",
+          "120": "_",
+          "121": "_",
+          "122": "r",
+          "123": "a",
+          "124": "t",
+          "125": "e",
+          "126": "_",
+          "127": "i",
+          "128": "n",
+          "129": "t",
+          "130": "e",
+          "131": "r",
+          "132": "v",
+          "133": "a",
+          "134": "l",
+          "135": "]",
+          "136": "\n",
+          "137": " ",
+          "138": " ",
+          "139": ")",
+          "140": "\n",
+          "141": " ",
+          "142": " ",
+          "143": " ",
+          "144": " ",
+          "145": "/",
+          "146": "\n",
+          "147": " ",
+          "148": " ",
+          "149": "p",
+          "150": "r",
+          "151": "o",
+          "152": "c",
+          "153": "e",
+          "154": "s",
+          "155": "s",
+          "156": "_",
+          "157": "c",
+          "158": "p",
+          "159": "u",
+          "160": "_",
+          "161": "c",
+          "162": "o",
+          "163": "r",
+          "164": "e",
+          "165": "s",
+          "166": "_",
+          "167": "a",
+          "168": "v",
+          "169": "a",
+          "170": "i",
+          "171": "l",
+          "172": "a",
+          "173": "b",
+          "174": "l",
+          "175": "e",
+          "176": "{",
+          "177": "j",
+          "178": "o",
+          "179": "b",
+          "180": "=",
+          "181": "~",
+          "182": "\"",
+          "183": "$",
+          "184": "j",
+          "185": "o",
+          "186": "b",
+          "187": "\"",
+          "188": ",",
+          "189": "i",
+          "190": "n",
+          "191": "s",
+          "192": "t",
+          "193": "a",
+          "194": "n",
+          "195": "c",
+          "196": "e",
+          "197": "=",
+          "198": "~",
+          "199": "\"",
+          "200": "$",
+          "201": "i",
+          "202": "n",
+          "203": "s",
+          "204": "t",
+          "205": "a",
+          "206": "n",
+          "207": "c",
+          "208": "e",
+          "209": "_",
+          "210": "s",
+          "211": "t",
+          "212": "o",
+          "213": "r",
+          "214": "a",
+          "215": "g",
+          "216": "e",
+          "217": "\"",
+          "218": "}",
+          "219": "\n",
+          "220": ")",
+          "editorMode": "code",
+          "expr": "max(\n  rate(process_cpu_seconds_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])\n  /\n  process_cpu_cores_available{job=~\"$job\", instance=~\"$instance_insert\"}\n)",
+          "legendFormat": "max",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "0": "m",
+          "1": "a",
+          "2": "x",
+          "3": "(",
+          "4": "\n",
+          "5": " ",
+          "6": " ",
+          "7": "r",
+          "8": "a",
+          "9": "t",
+          "10": "e",
+          "11": "(",
+          "12": "\n",
+          "13": " ",
+          "14": " ",
+          "15": " ",
+          "16": " ",
+          "17": "p",
+          "18": "r",
+          "19": "o",
+          "20": "c",
+          "21": "e",
+          "22": "s",
+          "23": "s",
+          "24": "_",
+          "25": "c",
+          "26": "p",
+          "27": "u",
+          "28": "_",
+          "29": "s",
+          "30": "e",
+          "31": "c",
+          "32": "o",
+          "33": "n",
+          "34": "d",
+          "35": "s",
+          "36": "_",
+          "37": "t",
+          "38": "o",
+          "39": "t",
+          "40": "a",
+          "41": "l",
+          "42": "{",
+          "43": "j",
+          "44": "o",
+          "45": "b",
+          "46": "=",
+          "47": "~",
+          "48": "\"",
+          "49": "$",
+          "50": "j",
+          "51": "o",
+          "52": "b",
+          "53": "\"",
+          "54": ",",
+          "55": "i",
+          "56": "n",
+          "57": "s",
+          "58": "t",
+          "59": "a",
+          "60": "n",
+          "61": "c",
+          "62": "e",
+          "63": "=",
+          "64": "~",
+          "65": "\"",
+          "66": "$",
+          "67": "i",
+          "68": "n",
+          "69": "s",
+          "70": "t",
+          "71": "a",
+          "72": "n",
+          "73": "c",
+          "74": "e",
+          "75": "_",
+          "76": "s",
+          "77": "t",
+          "78": "o",
+          "79": "r",
+          "80": "a",
+          "81": "g",
+          "82": "e",
+          "83": "\"",
+          "84": "}",
+          "85": "[",
+          "86": "t",
+          "87": "m",
+          "88": "p",
+          "89": "_",
+          "90": "v",
+          "91": "i",
+          "92": "c",
+          "93": "t",
+          "94": "o",
+          "95": "r",
+          "96": "i",
+          "97": "a",
+          "98": "m",
+          "99": "e",
+          "100": "t",
+          "101": "r",
+          "102": "i",
+          "103": "c",
+          "104": "s",
+          "105": "_",
+          "106": "p",
+          "107": "r",
+          "108": "e",
+          "109": "t",
+          "110": "t",
+          "111": "i",
+          "112": "f",
+          "113": "y",
+          "114": "_",
+          "115": "q",
+          "116": "u",
+          "117": "e",
+          "118": "r",
+          "119": "y",
+          "120": "_",
+          "121": "_",
+          "122": "r",
+          "123": "a",
+          "124": "t",
+          "125": "e",
+          "126": "_",
+          "127": "i",
+          "128": "n",
+          "129": "t",
+          "130": "e",
+          "131": "r",
+          "132": "v",
+          "133": "a",
+          "134": "l",
+          "135": "]",
+          "136": "\n",
+          "137": " ",
+          "138": " ",
+          "139": ")",
+          "140": "\n",
+          "141": " ",
+          "142": " ",
+          "143": " ",
+          "144": " ",
+          "145": "/",
+          "146": "\n",
+          "147": " ",
+          "148": " ",
+          "149": "p",
+          "150": "r",
+          "151": "o",
+          "152": "c",
+          "153": "e",
+          "154": "s",
+          "155": "s",
+          "156": "_",
+          "157": "c",
+          "158": "p",
+          "159": "u",
+          "160": "_",
+          "161": "c",
+          "162": "o",
+          "163": "r",
+          "164": "e",
+          "165": "s",
+          "166": "_",
+          "167": "a",
+          "168": "v",
+          "169": "a",
+          "170": "i",
+          "171": "l",
+          "172": "a",
+          "173": "b",
+          "174": "l",
+          "175": "e",
+          "176": "{",
+          "177": "j",
+          "178": "o",
+          "179": "b",
+          "180": "=",
+          "181": "~",
+          "182": "\"",
+          "183": "$",
+          "184": "j",
+          "185": "o",
+          "186": "b",
+          "187": "\"",
+          "188": ",",
+          "189": "i",
+          "190": "n",
+          "191": "s",
+          "192": "t",
+          "193": "a",
+          "194": "n",
+          "195": "c",
+          "196": "e",
+          "197": "=",
+          "198": "~",
+          "199": "\"",
+          "200": "$",
+          "201": "i",
+          "202": "n",
+          "203": "s",
+          "204": "t",
+          "205": "a",
+          "206": "n",
+          "207": "c",
+          "208": "e",
+          "209": "_",
+          "210": "s",
+          "211": "t",
+          "212": "o",
+          "213": "r",
+          "214": "a",
+          "215": "g",
+          "216": "e",
+          "217": "\"",
+          "218": "}",
+          "219": "\n",
+          "220": ")",
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "min(\n  rate(process_cpu_seconds_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])\n  /\n  process_cpu_cores_available{job=~\"$job\", instance=~\"$instance_insert\"}\n)",
+          "hide": false,
+          "legendFormat": "min",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "0": "m",
+          "1": "a",
+          "2": "x",
+          "3": "(",
+          "4": "\n",
+          "5": " ",
+          "6": " ",
+          "7": "r",
+          "8": "a",
+          "9": "t",
+          "10": "e",
+          "11": "(",
+          "12": "\n",
+          "13": " ",
+          "14": " ",
+          "15": " ",
+          "16": " ",
+          "17": "p",
+          "18": "r",
+          "19": "o",
+          "20": "c",
+          "21": "e",
+          "22": "s",
+          "23": "s",
+          "24": "_",
+          "25": "c",
+          "26": "p",
+          "27": "u",
+          "28": "_",
+          "29": "s",
+          "30": "e",
+          "31": "c",
+          "32": "o",
+          "33": "n",
+          "34": "d",
+          "35": "s",
+          "36": "_",
+          "37": "t",
+          "38": "o",
+          "39": "t",
+          "40": "a",
+          "41": "l",
+          "42": "{",
+          "43": "j",
+          "44": "o",
+          "45": "b",
+          "46": "=",
+          "47": "~",
+          "48": "\"",
+          "49": "$",
+          "50": "j",
+          "51": "o",
+          "52": "b",
+          "53": "\"",
+          "54": ",",
+          "55": "i",
+          "56": "n",
+          "57": "s",
+          "58": "t",
+          "59": "a",
+          "60": "n",
+          "61": "c",
+          "62": "e",
+          "63": "=",
+          "64": "~",
+          "65": "\"",
+          "66": "$",
+          "67": "i",
+          "68": "n",
+          "69": "s",
+          "70": "t",
+          "71": "a",
+          "72": "n",
+          "73": "c",
+          "74": "e",
+          "75": "_",
+          "76": "s",
+          "77": "t",
+          "78": "o",
+          "79": "r",
+          "80": "a",
+          "81": "g",
+          "82": "e",
+          "83": "\"",
+          "84": "}",
+          "85": "[",
+          "86": "t",
+          "87": "m",
+          "88": "p",
+          "89": "_",
+          "90": "v",
+          "91": "i",
+          "92": "c",
+          "93": "t",
+          "94": "o",
+          "95": "r",
+          "96": "i",
+          "97": "a",
+          "98": "m",
+          "99": "e",
+          "100": "t",
+          "101": "r",
+          "102": "i",
+          "103": "c",
+          "104": "s",
+          "105": "_",
+          "106": "p",
+          "107": "r",
+          "108": "e",
+          "109": "t",
+          "110": "t",
+          "111": "i",
+          "112": "f",
+          "113": "y",
+          "114": "_",
+          "115": "q",
+          "116": "u",
+          "117": "e",
+          "118": "r",
+          "119": "y",
+          "120": "_",
+          "121": "_",
+          "122": "r",
+          "123": "a",
+          "124": "t",
+          "125": "e",
+          "126": "_",
+          "127": "i",
+          "128": "n",
+          "129": "t",
+          "130": "e",
+          "131": "r",
+          "132": "v",
+          "133": "a",
+          "134": "l",
+          "135": "]",
+          "136": "\n",
+          "137": " ",
+          "138": " ",
+          "139": ")",
+          "140": "\n",
+          "141": " ",
+          "142": " ",
+          "143": " ",
+          "144": " ",
+          "145": "/",
+          "146": "\n",
+          "147": " ",
+          "148": " ",
+          "149": "p",
+          "150": "r",
+          "151": "o",
+          "152": "c",
+          "153": "e",
+          "154": "s",
+          "155": "s",
+          "156": "_",
+          "157": "c",
+          "158": "p",
+          "159": "u",
+          "160": "_",
+          "161": "c",
+          "162": "o",
+          "163": "r",
+          "164": "e",
+          "165": "s",
+          "166": "_",
+          "167": "a",
+          "168": "v",
+          "169": "a",
+          "170": "i",
+          "171": "l",
+          "172": "a",
+          "173": "b",
+          "174": "l",
+          "175": "e",
+          "176": "{",
+          "177": "j",
+          "178": "o",
+          "179": "b",
+          "180": "=",
+          "181": "~",
+          "182": "\"",
+          "183": "$",
+          "184": "j",
+          "185": "o",
+          "186": "b",
+          "187": "\"",
+          "188": ",",
+          "189": "i",
+          "190": "n",
+          "191": "s",
+          "192": "t",
+          "193": "a",
+          "194": "n",
+          "195": "c",
+          "196": "e",
+          "197": "=",
+          "198": "~",
+          "199": "\"",
+          "200": "$",
+          "201": "i",
+          "202": "n",
+          "203": "s",
+          "204": "t",
+          "205": "a",
+          "206": "n",
+          "207": "c",
+          "208": "e",
+          "209": "_",
+          "210": "s",
+          "211": "t",
+          "212": "o",
+          "213": "r",
+          "214": "a",
+          "215": "g",
+          "216": "e",
+          "217": "\"",
+          "218": "}",
+          "219": "\n",
+          "220": ")",
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "quantile(0.5,\n    rate(process_cpu_seconds_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])\n    /\n    process_cpu_cores_available{job=~\"$job\", instance=~\"$instance_insert\"}\n)",
+          "hide": false,
+          "legendFormat": "median",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "CPU % usage ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "99th percentile of insert operation duration. This represents the time it takes for 99% of insert operations to complete. High values indicate slow ingestion performance that could affect overall system throughput. Spikes may suggest storage bottlenecks, resource contention, or inefficient data processing.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 60
+      },
+      "id": 127,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "max(vt_http_request_duration_seconds{job=~\"$job\", instance=~\"$instance_insert_all\", quantile=\"0.99\"}) by (path) > 0",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{path}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP request duration p99 ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "Rate of incoming query requests by endpoint path. This metric tracks the query load on VictoriaTraces, including different query interfaces and internal operations. \n\nHigher rates indicate increased query activity from users or applications. Monitor for sudden spikes that might indicate new dashboards, automated queries, or potential performance issues. Sustained high rates may require scaling query processing capacity.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 68
+      },
+      "id": 130,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(vt_http_requests_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (path) > 0",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{path}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP request rate ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "99th percentile response time for VictoriaTraces HTTP endpoints, grouped by instance and path. This means 99% of requests are faster than this value. **Lower numbers are better**, as they indicate faster responses and fewer slow requests.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(bytes)/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 68
+      },
+      "id": 113,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(vt_rows_ingested_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (type) > 0",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "{{type}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(vt_bytes_ingested_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (type) > 0",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{type}} (bytes)",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Trace spans ingestion rate ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "Number of concurrent insert operations has reached the configured limit: `-maxConcurrentInserts` (default: 2x CPU cores)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "limit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 76
+      },
+      "id": 207,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "max(increase(vm_concurrent_insert_limit_reached_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (job)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Concurrent insert limit reached ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "Number of insert requests that timed out while waiting for available concurrency slots. This indicates sustained ingestion overload beyond configured limits.\n\nHigh values suggest:\n- Insert queue is consistently full\n- Insert requests waiting too long for execution slots\n- System under sustained heavy ingestion load\n- Need for horizontal scaling or ingestion optimization\n\nCombined with `Insert concurrency limit reached`, provides complete picture of ingestion rejection patterns.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "vis": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 76
+      },
+      "id": 203,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(vm_concurrent_insert_limit_timeout_total{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (job) > 0",
+          "interval": "",
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Insert timeouts ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "Number of active message processors handling trace span ingestion. These processors parse and process incoming trace spans before storage. The count typically correlates with the ingestion load.\n\nIf this number is unusually high or inflated (which is rare), check memory usage. It may indicate a heavy ingestion load or processing bottlenecks that could benefit from performance tuning.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 84
+      },
+      "id": 114,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "max(max_over_time(vt_insert_processors_count{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval])) by (job)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "max(max_over_time(vm_concurrent_insert_capacity{job=~\"$job\", instance=~\"$instance_insert\"}[$__rate_interval]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "soft limit",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Message processors ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "99th percentile duration of flush operations in vtinsert by type (max across instances). Spikes imply slow disks or backpressure from remote storage.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 84
+      },
+      "id": 119,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(vt_insert_flush_duration_seconds{job=~\"$job\", instance=~\"$instance_insert\", quantile=\"0.99\"}) by (type) > 0",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{type}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Flush duration p99 ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "Number of active streams tracked by vtinsert per instance. Steady growth indicates increasing stream cardinality; review stream field design.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 92
+      },
+      "id": 120,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(vt_insert_active_streams{job=~\"$job\", instance=~\"$instance_insert\"}) by (job)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Tracked streams ($instance_insert)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "$ds"
+      },
+      "description": "Number of remote write send errors over the last 24 hours per vtinsert instance. Non‑zero values typically indicate connectivity issues, timeouts, or 4xx/5xx responses.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "palette-classic-by-name"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 92
+      },
+      "id": 121,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(vt_insert_remote_send_errors_total{job=~\"$job\", instance=~\"$instance_insert\"}[24h])) by (job)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{job}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Send errors over 24h ($instance_insert)",
+      "type": "timeseries"
     },
     {
       "collapsed": true,
@@ -9076,7 +9044,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 100
       },
       "id": 122,
       "panels": [
@@ -9164,7 +9132,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 135
+            "y": 391
           },
           "id": 99,
           "options": {
@@ -9306,7 +9274,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 135
+            "y": 391
           },
           "id": 97,
           "options": {
@@ -9429,7 +9397,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 143
+            "y": 399
           },
           "id": 125,
           "options": {
@@ -9539,7 +9507,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 143
+            "y": 399
           },
           "id": 126,
           "options": {
@@ -9664,7 +9632,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 151
+            "y": 407
           },
           "id": 208,
           "options": {
@@ -9773,7 +9741,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 151
+            "y": 407
           },
           "id": 204,
           "options": {
@@ -9876,7 +9844,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 159
+            "y": 415
           },
           "id": 133,
           "options": {
@@ -9927,7 +9895,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 101
       },
       "id": 151,
       "panels": [
@@ -9999,7 +9967,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 136
+            "y": 392
           },
           "id": 152,
           "options": {
@@ -10109,7 +10077,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 136
+            "y": 392
           },
           "id": 150,
           "options": {
@@ -10219,7 +10187,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 144
+            "y": 400
           },
           "id": 153,
           "options": {
@@ -10329,7 +10297,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 144
+            "y": 400
           },
           "id": 154,
           "options": {
@@ -10439,7 +10407,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 152
+            "y": 408
           },
           "id": 155,
           "options": {
@@ -10549,7 +10517,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 152
+            "y": 408
           },
           "id": 156,
           "options": {
@@ -10659,7 +10627,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 160
+            "y": 416
           },
           "id": 157,
           "options": {
@@ -10769,7 +10737,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 160
+            "y": 416
           },
           "id": 158,
           "options": {
@@ -11082,6 +11050,5 @@
   "timezone": "",
   "title": "VictoriaTraces - cluster (VM)",
   "uid": "XqCOFEX6z",
-  "version": 1,
-  "weekStart": ""
+  "version": 1
 }
