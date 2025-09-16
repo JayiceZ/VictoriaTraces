@@ -1,0 +1,160 @@
+services:
+
+  hotrod:
+    # HotROD (Rides on Demand) is a demo application that generates trace data and sends to VictoriaTraces.
+    # Visit :8080 after the deployment and click any button on the page to generate trace spans.
+    image: jaegertracing/example-hotrod:1.70.0
+    ports:
+      - "8080:8080"
+      - "8083:8083"
+    command:
+      - "all"
+    environment:
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://vmauth:8427/insert/opentelemetry/v1/traces
+    depends_on:
+      - vmauth
+
+  # Grafana instance configured with VictoriaLogs as datasource
+  grafana:
+    image: grafana/grafana:12.0.2
+    depends_on:
+      - "victoriametrics"
+      - "vmauth"
+    ports:
+      - 3000:3000
+    volumes:
+      - grafanadata:/var/lib/grafana
+      - ./provisioning/datasources/victoriametrics-traces-datasource/cluster.yml:/etc/grafana/provisioning/datasources/cluster.yml
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./provisioning/plugins/:/var/lib/grafana/plugins
+      - ./../../dashboards/victoriatraces-cluster.json:/var/lib/grafana/dashboards/vt.json
+    restart: always
+
+  vtinsert-1:
+    image: victoriametrics/victoria-traces:heads-master-0-g5c245ff53-dirty-e7d1e460
+    command:
+      - "--storageNode=vtstorage-1:10428"
+      - "--storageNode=vtstorage-2:10428"
+  vtinsert-2:
+    image: victoriametrics/victoria-traces:heads-master-0-g5c245ff53-dirty-e7d1e460
+    command:
+      - "--storageNode=vtstorage-1:10428"
+      - "--storageNode=vtstorage-2:10428"
+
+  vtselect-1:
+    image: victoriametrics/victoria-traces:heads-master-0-g5c245ff53-dirty-e7d1e460
+    command:
+      - "--storageNode=vtstorage-1:10428"
+      - "--storageNode=vtstorage-2:10428"
+  vtselect-2:
+    image: victoriametrics/victoria-traces:heads-master-0-g5c245ff53-dirty-e7d1e460
+    command:
+      - "--storageNode=vtstorage-1:10428"
+      - "--storageNode=vtstorage-2:10428"
+
+  vtstorage-1:
+    image: victoriametrics/victoria-traces:heads-master-0-g5c245ff53-dirty-e7d1e460
+    command:
+      - "--storageDataPath=/vtraces"
+    volumes:
+      - vtdata-1:/vtraces
+  vtstorage-2:
+    image: victoriametrics/victoria-traces:heads-master-0-g5c245ff53-dirty-e7d1e460
+    command:
+      - "--storageDataPath=/vtraces"
+    volumes:
+      - vtdata-2:/vtraces
+
+  # VictoriaMetrics instance, a single process responsible for
+  # scraping, storing metrics and serve read requests.
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:v1.120.0
+    ports:
+      - "8428:8428"
+    volumes:
+      - vmdata:/storage
+      - ./prometheus-vt-cluster.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--storageDataPath=/storage"
+      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+    restart: always
+
+  # vmauth is a router and balancer for HTTP requests.
+  # It proxies requests to VictoriaTraces cluster.
+  vmauth:
+    image: victoriametrics/vmauth:v1.120.0
+    depends_on:
+      - "vtselect-1"
+      - "vtselect-2"
+      - "vtinsert-1"
+      - "vtinsert-2"
+    volumes:
+      - ./auth-vt-cluster.yml:/etc/auth.yml
+    command:
+      - "--auth.config=/etc/auth.yml"
+    ports:
+      - 8427:8427
+    restart: always
+
+  # vmalert executes alerting and recording rules on VictoriaMetrics.
+  vmalert-metrics:
+    image: victoriametrics/vmalert:v1.120.0
+    depends_on:
+      - "alertmanager"
+      - "victoriametrics"
+    ports:
+      - 8880:8880
+    volumes:
+      - ./rules/alerts-vtraces.yml:/etc/alerts/vtraces.yml
+      - ./rules/alerts-health.yml:/etc/alerts/alerts-health.yml
+    command:
+      # it evaluates data against VictoriaMetrics
+      - "--datasource.url=http://victoriametrics:8428/"
+      # results of alerting and recording rules are persisted to VictoriaMetrics only
+      - "--remoteWrite.url=http://victoriametrics:8428/"
+      # alerts state is restored from VictoriaMetrics on restarts
+      - "--remoteRead.url=http://victoriametrics:8428/"
+      - "--notifier.url=http://alertmanager:9093/"
+      - "--rule=/etc/alerts/*.yml"
+    restart: always
+
+  # vmalert executes alerting and recording rules on VictoriaTraces.
+  vmalert-traces:
+    image: victoriametrics/vmalert:v1.120.0
+    depends_on:
+      - "alertmanager"
+      - "vmauth"
+      - "victoriametrics"
+    ports:
+      - 8881:8881
+    volumes:
+      - ./vtraces-example-alerts.yml:/etc/alerts/vtraces-example-alerts.yml
+    command:
+      - "--httpListenAddr=0.0.0.0:8881"
+      # it evaluates data against VictoriaTraces
+      - "--datasource.url=http://vmauth:8427/"
+      # results of alerting and recording rules are persisted to VictoriaMetrics only
+      - "--remoteWrite.url=http://victoriametrics:8428/"
+      # alerts state is restored from VictoriaMetrics on restarts
+      - "--remoteRead.url=http://victoriametrics:8428/"
+      - "--notifier.url=http://alertmanager:9093/"
+      - "--rule=/etc/alerts/*.yml"
+    restart: always
+
+  # alertmanager receives alerting notifications from vmalert
+  # and distributes them according to --config.file.
+  alertmanager:
+    image: prom/alertmanager:v0.28.0
+    volumes:
+      - ./alertmanager.yml:/config/alertmanager.yml
+    command:
+      - "--config.file=/config/alertmanager.yml"
+    ports:
+      - 9093:9093
+    restart: always
+
+volumes:
+  vmdata: {}
+  vtdata-1: {}
+  vtdata-2: {}
+  grafanadata: {}

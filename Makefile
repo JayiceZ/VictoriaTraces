@@ -14,7 +14,7 @@ endif
 GO_BUILDINFO = -X 'github.com/VictoriaMetrics/VictoriaMetrics/lib/buildinfo.Version=$(APP_NAME)-$(DATEINFO_TAG)-$(BUILDINFO_TAG)'
 TAR_OWNERSHIP ?= --owner=1000 --group=1000
 
-GOLANGCI_LINT_VERSION := 2.2.1
+GOLANGCI_LINT_VERSION := 2.4.0
 
 .PHONY: $(MAKECMDGOALS)
 
@@ -155,8 +155,12 @@ test-full:
 test-full-386:
 	GOEXPERIMENT=synctest GOARCH=386 go test -coverprofile=coverage.txt -covermode=atomic ./lib/... ./app/...
 
-integration-test: victoria-traces
-	go test ./apptest/... -skip="^TestCluster.*"
+integration-test:
+	$(MAKE) apptest
+
+apptest:
+	$(MAKE) victoria-traces
+	go test ./apptest/...
 
 benchmark:
 	GOEXPERIMENT=synctest go test -bench=. ./lib/...
@@ -169,7 +173,7 @@ benchmark-pure:
 vendor-update:
 	go get -u ./lib/...
 	go get -u ./app/...
-	go mod tidy -compat=1.24
+	go mod tidy -compat=1.25
 	go mod vendor
 
 app-local:

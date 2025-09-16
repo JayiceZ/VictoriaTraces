@@ -40,6 +40,18 @@ var (
 // CommonParams common query params that shared by all requests.
 type CommonParams struct {
 	TenantIDs []logstorage.TenantID
+	Query     *logstorage.Query
+
+	// qs contains execution statistics for the Query.
+	qs logstorage.QueryStats
+}
+
+func (cp *CommonParams) NewQueryContext(ctx context.Context) *logstorage.QueryContext {
+	return logstorage.NewQueryContext(ctx, &cp.qs, cp.TenantIDs, cp.Query)
+}
+
+func (cp *CommonParams) UpdatePerQueryStatsMetrics() {
+	vtstorage.UpdatePerQueryStatsMetrics(&cp.qs)
 }
 
 // GetCommonParams get common params from request for all traces query APIs.
@@ -86,7 +98,11 @@ func GetServiceNameList(ctx context.Context, cp *CommonParams) ([]string, error)
 	}
 	q.AddTimeFilter(currentTime.Add(-*traceServiceAndSpanNameLookbehind).UnixNano(), currentTime.UnixNano())
 
-	serviceHits, err := vtstorage.GetStreamFieldValues(ctx, cp.TenantIDs, q, otelpb.ResourceAttrServiceName, *traceMaxServiceNameList)
+	cp.Query = q
+	qctx := cp.NewQueryContext(ctx)
+	defer cp.UpdatePerQueryStatsMetrics()
+
+	serviceHits, err := vtstorage.GetStreamFieldValues(qctx, otelpb.ResourceAttrServiceName, *traceMaxServiceNameList)
 	if err != nil {
 		return nil, fmt.Errorf("cannot parse query [%s]: %s", qStr, err)
 	}
@@ -111,7 +127,11 @@ func GetSpanNameList(ctx context.Context, cp *CommonParams, serviceName string) 
 	}
 	q.AddTimeFilter(currentTime.Add(-*traceServiceAndSpanNameLookbehind).UnixNano(), currentTime.UnixNano())
 
-	spanNameHits, err := vtstorage.GetStreamFieldValues(ctx, cp.TenantIDs, q, otelpb.NameField, *traceMaxSpanNameList)
+	cp.Query = q
+	qctx := cp.NewQueryContext(ctx)
+	defer cp.UpdatePerQueryStatsMetrics()
+
+	spanNameHits, err := vtstorage.GetStreamFieldValues(qctx, otelpb.NameField, *traceMaxSpanNameList)
 	if err != nil {
 		return nil, fmt.Errorf("get span name hits error: %s", err)
 	}
@@ -140,7 +160,7 @@ func GetTrace(ctx context.Context, cp *CommonParams, traceID string) ([]*Row, er
 	if err != nil {
 		return nil, fmt.Errorf("cannot unmarshal query=%q: %w", qStr, err)
 	}
-	q.AddPipeLimit(1)
+	q.AddPipeOffsetLimit(0, 1)
 	traceTimestamp, err := findTraceIDTimeSplitTimeRange(ctx, q, cp)
 	if err != nil && !isOutOfRetentionPeriodError(err) {
 		return nil, fmt.Errorf("cannot find trace_id %q start time: %s", traceID, err)
@@ -196,6 +216,9 @@ func GetTraceList(ctx context.Context, cp *CommonParams, param *TraceQueryParam)
 	q.AddTimeFilter(startTime.Add(-*traceMaxDurationWindow).UnixNano(), param.StartTimeMax.Add(*traceMaxDurationWindow).UnixNano())
 
 	ctxWithCancel, cancel := context.WithCancel(ctx)
+	cp.Query = q
+	qctx := cp.NewQueryContext(ctxWithCancel)
+	defer cp.UpdatePerQueryStatsMetrics()
 
 	// search for trace spans and write to `rows []*Row`
 	var rowsLock sync.Mutex
@@ -238,7 +261,7 @@ func GetTraceList(ctx context.Context, cp *CommonParams, param *TraceQueryParam)
 		}
 	}
 
-	if err = vtstorage.RunQuery(ctxWithCancel, cp.TenantIDs, q, writeBlock); err != nil {
+	if err = vtstorage.RunQuery(qctx, writeBlock); err != nil {
 		return nil, nil, err
 	}
 	if missingTimeColumn.Load() {
@@ -252,7 +275,7 @@ func GetTraceList(ctx context.Context, cp *CommonParams, param *TraceQueryParam)
 func getTraceIDList(ctx context.Context, cp *CommonParams, param *TraceQueryParam) ([]string, time.Time, error) {
 	currentTime := time.Now()
 	// query: * AND <filter> | last 1 by (_time) partition by (trace_id) | fields _time, trace_id | sort by (_time) desc
-	qStr := "*"
+	qStr := "* "
 	if param.ServiceName != "" {
 		qStr += fmt.Sprintf("AND _stream:{"+otelpb.ResourceAttrServiceName+"=%q} ", param.ServiceName)
 	}
@@ -276,7 +299,7 @@ func getTraceIDList(ctx context.Context, cp *CommonParams, param *TraceQueryPara
 	if err != nil {
 		return nil, time.Time{}, fmt.Errorf("cannot parse query [%s]: %s", qStr, err)
 	}
-	q.AddPipeLimit(uint64(param.Limit))
+	q.AddPipeOffsetLimit(0, uint64(param.Limit))
 
 	traceIDs, maxStartTime, err := findTraceIDsSplitTimeRange(ctx, q, cp, param.StartTimeMin, param.StartTimeMax, param.Limit)
 	if err != nil {
@@ -298,6 +321,10 @@ func findTraceIDsSplitTimeRange(ctx context.Context, q *logstorage.Query, cp *Co
 	var traceIDListLock sync.Mutex
 	traceIDList := make([]string, 0, limit)
 	maxStartTimeStr := endTime.Format(time.RFC3339)
+
+	cp.Query = q
+	qctx := cp.NewQueryContext(ctx)
+	defer cp.UpdatePerQueryStatsMetrics()
 
 	writeBlock := func(_ uint, db *logstorage.DataBlock) {
 		columns := db.Columns
@@ -325,7 +352,8 @@ func findTraceIDsSplitTimeRange(ctx context.Context, q *logstorage.Query, cp *Co
 
 	for currentStartTime.After(startTime) {
 		qClone := q.CloneWithTimeFilter(currentTime.UnixNano(), currentStartTime.UnixNano(), endTime.UnixNano())
-		if err := vtstorage.RunQuery(ctx, cp.TenantIDs, qClone, writeBlock); err != nil {
+		qctx = qctx.WithQuery(qClone)
+		if err := vtstorage.RunQuery(qctx, writeBlock); err != nil {
 			return nil, time.Time{}, err
 		}
 
@@ -350,7 +378,8 @@ func findTraceIDsSplitTimeRange(ctx context.Context, q *logstorage.Query, cp *Co
 	}
 
 	qClone := q.CloneWithTimeFilter(currentTime.UnixNano(), currentStartTime.UnixNano(), endTime.UnixNano())
-	if err := vtstorage.RunQuery(ctx, cp.TenantIDs, qClone, writeBlock); err != nil {
+	qctx = qctx.WithQuery(qClone)
+	if err := vtstorage.RunQuery(qctx, writeBlock); err != nil {
 		return nil, time.Time{}, err
 	}
 
@@ -368,7 +397,12 @@ func findTraceIDsSplitTimeRange(ctx context.Context, q *logstorage.Query, cp *Co
 func findTraceIDTimeSplitTimeRange(ctx context.Context, q *logstorage.Query, cp *CommonParams) (time.Time, error) {
 	traceIDStartTimeInt := int64(0)
 	var missingTimeColumn atomic.Bool
+
 	ctxWithCancel, cancel := context.WithCancel(ctx)
+	cp.Query = q
+	qctx := cp.NewQueryContext(ctxWithCancel)
+	defer cp.UpdatePerQueryStatsMetrics()
+
 	writeBlock := func(_ uint, db *logstorage.DataBlock) {
 		if missingTimeColumn.Load() {
 			return
@@ -396,7 +430,9 @@ func findTraceIDTimeSplitTimeRange(ctx context.Context, q *logstorage.Query, cp 
 	endTime := currentTime
 	for startTime.UnixNano() > 0 {
 		qq := q.CloneWithTimeFilter(currentTime.UnixNano(), startTime.UnixNano(), endTime.UnixNano())
-		if err := vtstorage.RunQuery(ctxWithCancel, cp.TenantIDs, qq, writeBlock); err != nil {
+		qctx = qctx.WithQuery(qq)
+
+		if err := vtstorage.RunQuery(qctx, writeBlock); err != nil {
 			return time.Time{}, err
 		}
 		if missingTimeColumn.Load() {
@@ -467,6 +503,10 @@ func findSpansByTraceIDAndTime(ctx context.Context, cp *CommonParams, traceID st
 		return nil, fmt.Errorf("cannot parse query [%s]: %s", qStr, err)
 	}
 	ctxWithCancel, cancel := context.WithCancel(ctx)
+	cp.Query = q
+	qctx := cp.NewQueryContext(ctxWithCancel)
+	defer cp.UpdatePerQueryStatsMetrics()
+
 	// search for trace spans and write to `rows []*Row`
 	var rowsLock sync.Mutex
 	var rows []*Row
@@ -512,7 +552,8 @@ func findSpansByTraceIDAndTime(ctx context.Context, cp *CommonParams, traceID st
 	}
 
 	qq := q.CloneWithTimeFilter(endTime.UnixNano(), startTime.UnixNano(), endTime.UnixNano())
-	if err = vtstorage.RunQuery(ctxWithCancel, cp.TenantIDs, qq, writeBlock); err != nil {
+	qctx = qctx.WithQuery(qq)
+	if err = vtstorage.RunQuery(qctx, writeBlock); err != nil {
 		return nil, err
 	}
 	if missingTimeColumn.Load() {

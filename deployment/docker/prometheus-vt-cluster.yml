@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: victoriametrics
+    static_configs:
+      - targets:
+          - victoriametrics:8428
+  - job_name: vtselect
+    static_configs:
+      - targets:
+          - vtselect-1:10428
+          - vtselect-2:10428
+  - job_name: vtinsert
+    static_configs:
+      - targets:
+          - vtinsert-1:10428
+          - vtinsert-2:10428
+  - job_name: vtstorage
+    static_configs:
+      - targets:
+          - vtstorage-1:10428
+          - vtstorage-2:10428

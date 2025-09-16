@@ -58,6 +58,10 @@ func (pf *pipeFormat) canLiveTail() bool {
 	return true
 }
 
+func (pf *pipeFormat) canReturnLastNResults() bool {
+	return pf.resultField != "_time"
+}
+
 func (pf *pipeFormat) updateNeededFields(f *prefixfilter.Filter) {
 	if f.MatchNothing() {
 		if pf.iff != nil {
@@ -267,7 +271,7 @@ func parsePipeFormat(lex *lexer) (pipe, error) {
 	}
 
 	// parse format
-	formatStr, err := getCompoundToken(lex)
+	formatStr, err := lex.nextCompoundToken()
 	if err != nil {
 		return nil, fmt.Errorf("cannot read 'format': %w", err)
 	}

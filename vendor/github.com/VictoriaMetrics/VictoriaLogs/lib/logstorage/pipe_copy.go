@@ -41,6 +41,12 @@ func (pc *pipeCopy) canLiveTail() bool {
 	return true
 }
 
+func (pc *pipeCopy) canReturnLastNResults() bool {
+	// TODO: properly verify that the _time field isn't overwritten by non-timestamp.
+
+	return true
+}
+
 func (pc *pipeCopy) updateNeededFields(f *prefixfilter.Filter) {
 	for i := len(pc.srcFieldFilters) - 1; i >= 0; i-- {
 		srcFieldFilter := pc.srcFieldFilters[i]

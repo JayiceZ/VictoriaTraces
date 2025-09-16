@@ -672,7 +672,7 @@ func (sup *statsCountUniqHashProcessor) limitReached(su *statsCountUniqHash) boo
 	return sup.entriesCount() > limit
 }
 
-func parseStatsCountUniqHash(lex *lexer) (*statsCountUniqHash, error) {
+func parseStatsCountUniqHash(lex *lexer) (statsFunc, error) {
 	fields, err := parseStatsFuncFields(lex, "count_uniq_hash")
 	if err != nil {
 		return nil, err
@@ -684,12 +684,10 @@ func parseStatsCountUniqHash(lex *lexer) (*statsCountUniqHash, error) {
 		fields: fields,
 	}
 	if lex.isKeyword("limit") {
-		lex.nextToken()
-		n, ok := tryParseUint64(lex.token)
-		if !ok {
-			return nil, fmt.Errorf("cannot parse 'limit %s' for 'count_uniq_hash': %w", lex.token, err)
+		n, err := parseLimit(lex)
+		if err != nil {
+			return nil, err
 		}
-		lex.nextToken()
 		su.limit = n
 	}
 	return su, nil

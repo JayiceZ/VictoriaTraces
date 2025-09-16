@@ -73,6 +73,10 @@ func (pf *pipeFacets) canLiveTail() bool {
 	return false
 }
 
+func (pf *pipeFacets) canReturnLastNResults() bool {
+	return false
+}
+
 func (pf *pipeFacets) updateNeededFields(f *prefixfilter.Filter) {
 	f.AddAllowFilter("*")
 }

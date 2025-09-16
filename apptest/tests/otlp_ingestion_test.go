@@ -16,7 +16,7 @@ import (
 )
 
 // TestSingleOTLPIngestionJaegerQuery test data ingestion of `/insert/opentelemetry/v1/traces` API
-// and queries of various `/select/jaeger/api/*` APIs for vl-single.
+// and queries of various `/select/jaeger/api/*` APIs for vt-single.
 func TestSingleOTLPIngestionJaegerQuery(t *testing.T) {
 	os.RemoveAll(t.Name())
 
