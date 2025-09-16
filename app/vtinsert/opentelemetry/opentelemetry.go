@@ -92,22 +92,25 @@ func handleProtobufRequest(r *http.Request, w http.ResponseWriter) {
 	encoding := r.Header.Get("Content-Encoding")
 	err = protoparserutil.ReadUncompressedData(r.Body, encoding, maxRequestSize, func(data []byte) error {
 		var (
-			req   otelpb.ExportTraceServiceRequest
-			cbErr error
+			req         otelpb.ExportTraceServiceRequest
+			callbackErr error
 		)
 		lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
-		if unmarshalErr := req.UnmarshalProtobuf(data); unmarshalErr != nil {
+		if callbackErr = req.UnmarshalProtobuf(data); callbackErr != nil {
 			errorsProtobufTotal.Inc()
-			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), unmarshalErr)
+			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), callbackErr)
 		}
-		cbErr = pushExportTraceServiceRequest(&req, lmp)
+		callbackErr = pushExportTraceServiceRequest(&req, lmp)
 		lmp.MustClose()
-		return cbErr
+		return callbackErr
 	})
 	if err != nil {
 		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
 		return
 	}
+	// update requestProtobufDuration only for successfully parsed requests
+	// There is no need in updating requestProtobufDuration for request errors,
+	// since their timings are usually much smaller than the timing for successful request parsing.
 	requestProtobufDuration.UpdateDuration(startTime)
 }
 
@@ -133,22 +136,25 @@ func handleJSONRequest(r *http.Request, w http.ResponseWriter) {
 	encoding := r.Header.Get("Content-Encoding")
 	err = protoparserutil.ReadUncompressedData(r.Body, encoding, maxRequestSize, func(data []byte) error {
 		var (
-			req   otelpb.ExportTraceServiceRequest
-			cbErr error
+			req         otelpb.ExportTraceServiceRequest
+			callbackErr error
 		)
 		lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
-		if unmarshalErr := req.UnmarshalJSONCustom(data); unmarshalErr != nil {
+		if callbackErr = req.UnmarshalJSONCustom(data); callbackErr != nil {
 			errorsJSONTotal.Inc()
-			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), unmarshalErr)
+			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), callbackErr)
 		}
-		cbErr = pushExportTraceServiceRequest(&req, lmp)
+		callbackErr = pushExportTraceServiceRequest(&req, lmp)
 		lmp.MustClose()
-		return cbErr
+		return callbackErr
 	})
 	if err != nil {
 		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
 		return
 	}
+	// update requestJSONDuration only for successfully parsed requests
+	// There is no need in updating requestJSONDuration for request errors,
+	// since their timings are usually much smaller than the timing for successful request parsing.
 	requestJSONDuration.UpdateDuration(startTime)
 }
 
