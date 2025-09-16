@@ -23,11 +23,11 @@ var maxRequestSize = flagutil.NewBytes("opentelemetry.traces.maxRequestSize", 64
 var (
 	requestsProtobufTotal = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
 	errorsProtobufTotal   = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
-	requestsJSONTotal     = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
-	errorsJSONTotal       = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="JSON"}`)
+	requestsJSONTotal     = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="json"}`)
+	errorsJSONTotal       = metrics.NewCounter(`vt_http_errors_total{path="/insert/opentelemetry/v1/traces",format="json"}`)
 
 	requestProtobufDuration = metrics.NewSummary(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
-  requestJSONDuration     = metrics.NewSummary(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="json"}`)
+	requestJSONDuration     = metrics.NewSummary(`vt_http_request_duration_seconds{path="/insert/opentelemetry/v1/traces",format="json"}`)
 )
 
 var (
@@ -51,40 +51,28 @@ func RequestHandler(path string, w http.ResponseWriter, r *http.Request) bool {
 	// use the same path as opentelemetry collector
 	// https://opentelemetry.io/docs/specs/otlp/#otlphttp-request
 	case "/insert/opentelemetry/v1/traces":
-		handleInsertTracesRequest(r, w)
-		return true
+		return handleTracesRequest(r, w)
 	default:
 		return false
 	}
 }
 
-func handleInsertTracesRequest(r *http.Request, w http.ResponseWriter) {
-	startTime := time.Now()
-	var err error
-
-	contentType := r.Header.Get("Content-Type")
-	// update request duration only for successfully parsed requests
-	// There is no need in updating request duration for request errors,
-	// since their timings are usually much smaller than the timing for successful request parsing.
-	switch contentType {
+func handleTracesRequest(r *http.Request, w http.ResponseWriter) bool {
+	switch contentType := r.Header.Get("Content-Type"); contentType {
 	case contentTypeProtobuf:
-		requestsProtobufTotal.Inc()
-		defer func() {
-			if err == nil {
-				requestProtobufDuration.UpdateDuration(startTime)
-			}
-		}()
+		handleProtobufRequest(r, w)
 	case contentTypeJSON:
-		requestsJSONTotal.Inc()
-		defer func() {
-			if err == nil {
-				requestJSONDuration.UpdateDuration(startTime)
-			}
-		}()
+		handleJSONRequest(r, w)
 	default:
 		httpserver.Errorf(w, r, "Content-Type %s isn't supported for opentelemetry format. Use protobuf or JSON encoding", contentType)
-		return
+		return false
 	}
+	return true
+}
+
+func handleProtobufRequest(r *http.Request, w http.ResponseWriter) {
+	startTime := time.Now()
+	requestsProtobufTotal.Inc()
 
 	cp, err := insertutil.GetCommonParams(r)
 	if err != nil {
@@ -96,43 +84,75 @@ func handleInsertTracesRequest(r *http.Request, w http.ResponseWriter) {
 	// for potentially better efficiency.
 	cp.StreamFields = append(mandatoryStreamFields, cp.StreamFields...)
 
-	if err := insertutil.CanWriteData(); err != nil {
+	if err = insertutil.CanWriteData(); err != nil {
 		httpserver.Errorf(w, r, "%s", err)
 		return
 	}
 
 	encoding := r.Header.Get("Content-Encoding")
 	err = protoparserutil.ReadUncompressedData(r.Body, encoding, maxRequestSize, func(data []byte) error {
+		var (
+			req   otelpb.ExportTraceServiceRequest
+			cbErr error
+		)
 		lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
-		err := pushExportTraceServiceRequest(data, lmp, contentType)
+		if unmarshalErr := req.UnmarshalProtobuf(data); unmarshalErr != nil {
+			errorsProtobufTotal.Inc()
+			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), unmarshalErr)
+		}
+		cbErr = pushExportTraceServiceRequest(&req, lmp)
 		lmp.MustClose()
-		return err
+		return cbErr
 	})
 	if err != nil {
 		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
 		return
 	}
-
+	requestProtobufDuration.UpdateDuration(startTime)
 }
 
-func pushExportTraceServiceRequest(data []byte, lmp insertutil.LogMessageProcessor, contentType string) error {
-	var (
-		req otelpb.ExportTraceServiceRequest
-		err error
-	)
-	switch contentType {
-	case contentTypeJSON:
-		if err = req.UnmarshalJSONCustom(data); err != nil {
-			errorsJSONTotal.Inc()
-			return fmt.Errorf("cannot unmarshal request from %d JSON bytes: %w", len(data), err)
-		}
-	case contentTypeProtobuf:
-		if err = req.UnmarshalProtobuf(data); err != nil {
-			errorsProtobufTotal.Inc()
-			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), err)
-		}
+func handleJSONRequest(r *http.Request, w http.ResponseWriter) {
+	startTime := time.Now()
+	requestsJSONTotal.Inc()
+
+	cp, err := insertutil.GetCommonParams(r)
+	if err != nil {
+		httpserver.Errorf(w, r, "cannot parse common params from request: %s", err)
+		return
+	}
+	// stream fields must contain the service name and span name.
+	// by using arguments and headers, users can also add other fields as stream fields
+	// for potentially better efficiency.
+	cp.StreamFields = append(mandatoryStreamFields, cp.StreamFields...)
+
+	if err = insertutil.CanWriteData(); err != nil {
+		httpserver.Errorf(w, r, "%s", err)
+		return
 	}
 
+	encoding := r.Header.Get("Content-Encoding")
+	err = protoparserutil.ReadUncompressedData(r.Body, encoding, maxRequestSize, func(data []byte) error {
+		var (
+			req   otelpb.ExportTraceServiceRequest
+			cbErr error
+		)
+		lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
+		if unmarshalErr := req.UnmarshalJSONCustom(data); unmarshalErr != nil {
+			errorsJSONTotal.Inc()
+			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), unmarshalErr)
+		}
+		cbErr = pushExportTraceServiceRequest(&req, lmp)
+		lmp.MustClose()
+		return cbErr
+	})
+	if err != nil {
+		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
+		return
+	}
+	requestJSONDuration.UpdateDuration(startTime)
+}
+
+func pushExportTraceServiceRequest(req *otelpb.ExportTraceServiceRequest, lmp insertutil.LogMessageProcessor) error {
 	var commonFields []logstorage.Field
 	for _, rs := range req.ResourceSpans {
 		commonFields = commonFields[:0]
