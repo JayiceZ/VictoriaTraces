@@ -1,7 +1,9 @@
 package opentelemetry
 
 import (
+	"encoding/binary"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -156,6 +158,69 @@ func handleJSONRequest(r *http.Request, w http.ResponseWriter) {
 	// There is no need in updating requestJSONDuration for request errors,
 	// since their timings are usually much smaller than the timing for successful request parsing.
 	requestJSONDuration.UpdateDuration(startTime)
+}
+
+func GrpcRequestHandler(r *http.Request, w http.ResponseWriter) {
+	if r.URL.Path != "/opentelemetry.proto.collector.trace.v1.TraceService/Export" {
+		httpserver.Errorf(w, r, "failed to process grpc request:%s", &httpserver.ErrorWithStatusCode{Err: fmt.Errorf("grpc method not found: %s", r.URL.Path), StatusCode: http.StatusNotFound})
+		return
+	}
+
+	cp, err := insertutil.GetCommonParams(r)
+	if err != nil {
+		httpserver.Errorf(w, r, "cannot parse common params from request: %s", err)
+		return
+	}
+	// stream fields must contain the service name and span name.
+	// by using arguments and headers, users can also add other fields as stream fields
+	// for potentially better efficiency.
+	cp.StreamFields = append(mandatoryStreamFields, cp.StreamFields...)
+
+	if err = insertutil.CanWriteData(); err != nil {
+		httpserver.Errorf(w, r, "%s", err)
+		return
+	}
+
+	protobufData, err := getProtobufData(r)
+	if err != nil {
+		httpserver.Errorf(w, r, "failed to get protobuf data from request, error: %s", err)
+		return
+	}
+
+	var req otelpb.ExportTraceServiceRequest
+	lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
+	if err = req.UnmarshalProtobuf(protobufData); err != nil {
+		httpserver.Errorf(w, r, "cannot unmarshal request from %d protobuf bytes: %w", len(protobufData), err)
+		return
+	}
+	err = pushExportTraceServiceRequest(&req, lmp)
+	lmp.MustClose()
+	if err != nil {
+		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
+	}
+
+	return
+}
+
+func getProtobufData(r *http.Request) ([]byte, error) {
+	reqBody, err := io.ReadAll(r.Body)
+	if err != nil {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("cannot read request body: %s", err)}
+	}
+	// |___compressType___|___messageLength___|___message___|
+	// 0                  1                   5             N
+	if len(reqBody) < 5 {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid grpc header length: %d", len(reqBody))}
+	}
+	grpcHeader := reqBody[:5]
+	if isCompress := grpcHeader[0]; isCompress != 0 {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("grpc compression not supporte")}
+	}
+	messageLength := binary.BigEndian.Uint32(grpcHeader[1:5])
+	if len(reqBody) != 5+int(messageLength) {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid message length: %d", messageLength)}
+	}
+	return reqBody[5:], nil
 }
 
 func pushExportTraceServiceRequest(req *otelpb.ExportTraceServiceRequest, lmp insertutil.LogMessageProcessor) error {

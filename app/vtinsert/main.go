@@ -50,6 +50,10 @@ func RequestHandler(w http.ResponseWriter, r *http.Request) bool {
 	return false
 }
 
+func GrpcInsertHandler(w http.ResponseWriter, r *http.Request) {
+	opentelemetry.GrpcRequestHandler(r, w)
+}
+
 func insertHandler(w http.ResponseWriter, r *http.Request, path string) bool {
 	switch path {
 	case "/insert/ready":

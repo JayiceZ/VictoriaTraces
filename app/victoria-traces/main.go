@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"net/http"
@@ -19,6 +20,8 @@ import (
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/insertutil"
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtselect"
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtstorage"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 )
 
 var (
@@ -26,6 +29,7 @@ var (
 	useProxyProtocol = flagutil.NewArrayBool("httpListenAddr.useProxyProtocol", "Whether to use proxy protocol for connections accepted at the given -httpListenAddr . "+
 		"See https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt . "+
 		"With enabled proxy protocol http server cannot serve regular /metrics endpoint. Use -pushmetrics.url for metrics pushing")
+	grpcListenAddr = flagutil.NewArrayString("grpcListenAddr", "TCP address to listen for incoming grpc requests.")
 )
 
 func main() {
@@ -40,6 +44,10 @@ func main() {
 	if len(listenAddrs) == 0 {
 		listenAddrs = []string{":10428"}
 	}
+	http2ListenAddr := ":10429"
+	if len(*grpcListenAddr) != 0 {
+		http2ListenAddr = (*grpcListenAddr)[0]
+	}
 	logger.Infof("starting VictoriaTraces at %q...", listenAddrs)
 	startTime := time.Now()
 
@@ -49,9 +57,20 @@ func main() {
 	insertutil.SetLogRowsStorage(&vtstorage.Storage{})
 	vtinsert.Init()
 
-	go httpserver.Serve(listenAddrs, requestHandler, httpserver.ServeOptions{
+	go httpserver.Serve(listenAddrs, httpRequestHandler, httpserver.ServeOptions{
 		UseProxyProtocol: useProxyProtocol,
 	})
+
+	http2Server := http.Server{
+		Addr:    http2ListenAddr,
+		Handler: h2c.NewHandler(http.HandlerFunc(http2RequestHandler), &http2.Server{}),
+	}
+	go func() {
+		if err := http2Server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			logger.Fatalf("http2 server start error: %s", err)
+		}
+	}()
+
 	logger.Infof("started VictoriaTraces in %.3f seconds; see https://docs.victoriametrics.com/victoriatraces/", time.Since(startTime).Seconds())
 
 	pushmetrics.Init()
@@ -73,7 +92,7 @@ func main() {
 	logger.Infof("the VictoriaTraces has been stopped in %.3f seconds", time.Since(startTime).Seconds())
 }
 
-func requestHandler(w http.ResponseWriter, r *http.Request) bool {
+func httpRequestHandler(w http.ResponseWriter, r *http.Request) bool {
 	if r.URL.Path == "/" {
 		if r.Method != http.MethodGet {
 			return false
@@ -81,7 +100,7 @@ func requestHandler(w http.ResponseWriter, r *http.Request) bool {
 		w.Header().Add("Content-Type", "text/html; charset=utf-8")
 		fmt.Fprintf(w, "<h2>Single-node VictoriaTraces</h2></br>")
 		fmt.Fprintf(w, "Version %s<br>", buildinfo.Version)
-		fmt.Fprintf(w, "See docs at <a href='https://docs.victoriametrics.com/victoriatraces/'>https://docs.victoriametrics.com/victoriatraces/</a></br>")
+		fmt.Fprintf(w, "See docs at <a href=' '>https://docs.victoriametrics.com/victoriatraces/</a ></br>")
 		fmt.Fprintf(w, "Useful endpoints:</br>")
 		httpserver.WriteAPIHelp(w, [][2]string{
 			{"select/vmui", "Web UI for VictoriaTraces"},
@@ -101,6 +120,10 @@ func requestHandler(w http.ResponseWriter, r *http.Request) bool {
 		return true
 	}
 	return false
+}
+
+func http2RequestHandler(w http.ResponseWriter, r *http.Request) {
+	vtinsert.GrpcInsertHandler(w, r)
 }
 
 func usage() {
