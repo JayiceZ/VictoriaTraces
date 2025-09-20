@@ -1,0 +1,68 @@
+package opentelemetry
+
+import (
+	"encoding/binary"
+	"fmt"
+	"github.com/VictoriaMetrics/VictoriaMetrics/lib/httpserver"
+	"github.com/VictoriaMetrics/VictoriaTraces/lib/protoparser/opentelemetry/pb"
+	"io"
+	"net/http"
+)
+
+func getProtobufData(r *http.Request) ([]byte, error) {
+	reqBody, err := io.ReadAll(r.Body)
+	if err != nil {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("cannot read request body: %s", err)}
+	}
+	// +--------+-------------------------------------------------+
+	// | 1 byte |                    4 bytes                      |
+	// +--------+-------------------------------------------------+
+	// | Compressed |               Message Length                |
+	// |   Flag     |                 (uint32)                    |
+	// +------------+---------------------------------------------+
+	// |                                                          |
+	// |                   Message Data                           |
+	// |                 (variable length)                        |
+	// |                                                          |
+	// +----------------------------------------------------------+
+	if len(reqBody) < 5 {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid grpc header length: %d", len(reqBody))}
+	}
+	grpcHeader := reqBody[:5]
+	if isCompress := grpcHeader[0]; isCompress != 0 {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("grpc compression not supporte")}
+	}
+	messageLength := binary.BigEndian.Uint32(grpcHeader[1:5])
+	if len(reqBody) != 5+int(messageLength) {
+		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid message length: %d", messageLength)}
+	}
+	return reqBody[5:], nil
+}
+
+// https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#message-encoding
+func writeExportTraceResponses(w http.ResponseWriter, rejectedSpans uint64, errorMessage string) {
+	resp := pb.ExportTraceServiceResponse{
+		ExportTracePartialSuccess: pb.ExportTracePartialSuccess{
+			RejectedSpans: rejectedSpans,
+			ErrorMessage:  errorMessage,
+		},
+	}
+	respData := resp.MarshalProtobuf(nil)
+	grpcRespData := make([]byte, 5+len(respData))
+	grpcRespData[0] = 0
+	binary.BigEndian.PutUint32(grpcRespData[1:5], uint32(len(respData)))
+	for i := 0; i < len(grpcRespData); i++ {
+		print(grpcRespData[i])
+	}
+	copy(grpcRespData[5:], respData)
+	for i := 0; i < len(grpcRespData); i++ {
+		print(grpcRespData[i])
+	}
+	w.Header().Set("Content-Type", "application/grpc+proto")
+	w.Header().Set("Trailer", "grpc-status, grpc-message")
+
+	w.Write(grpcRespData)
+	w.Header().Set("Grpc-Status", "0")
+	w.Header().Set("Grpc-Message", "")
+
+}
