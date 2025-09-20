@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/httpserver"
+	"github.com/VictoriaMetrics/VictoriaMetrics/lib/logger"
 	"github.com/VictoriaMetrics/VictoriaTraces/lib/protoparser/opentelemetry/pb"
 	"io"
 	"net/http"
@@ -29,7 +30,7 @@ func getProtobufData(r *http.Request) ([]byte, error) {
 		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid grpc header length: %d", len(reqBody))}
 	}
 	grpcHeader := reqBody[:5]
-	if isCompress := grpcHeader[0]; isCompress != 0 {
+	if isCompress := grpcHeader[0]; isCompress != 0 && isCompress != 1 {
 		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("grpc compression not supporte")}
 	}
 	messageLength := binary.BigEndian.Uint32(grpcHeader[1:5])
@@ -55,7 +56,16 @@ func writeExportTraceResponses(w http.ResponseWriter, rejectedSpans int64, error
 	w.Header().Set("Content-Type", "application/grpc+proto")
 	w.Header().Set("Trailer", "grpc-status, grpc-message")
 
-	w.Write(grpcRespData)
+	writtenLen, err := w.Write(grpcRespData)
+	if writtenLen != len(grpcRespData) {
+		logger.Errorf("unexpected write of %d bytes in replying OLTP export grpc request, expected:%d", writtenLen, len(grpcRespData))
+		return
+	}
+	if err != nil {
+		logger.Errorf("failed to reply OLTP export grpc request , error:%s", err)
+		return
+	}
+
 	w.Header().Set("Grpc-Status", "0")
 	w.Header().Set("Grpc-Message", "")
 

@@ -1,6 +1,7 @@
 package opentelemetry
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -165,7 +166,6 @@ func GrpcRequestHandler(r *http.Request, w http.ResponseWriter) {
 		httpserver.Errorf(w, r, "failed to process grpc request:%s", &httpserver.ErrorWithStatusCode{Err: fmt.Errorf("grpc method not found: %s", r.URL.Path), StatusCode: http.StatusNotFound})
 		return
 	}
-
 	cp, err := insertutil.GetCommonParams(r)
 	if err != nil {
 		httpserver.Errorf(w, r, "cannot parse common params from request: %s", err)
@@ -186,15 +186,26 @@ func GrpcRequestHandler(r *http.Request, w http.ResponseWriter) {
 		httpserver.Errorf(w, r, "failed to get protobuf data from request, error: %s", err)
 		return
 	}
+	encoding := r.Header.Get("grpc-encoding")
 
-	var req otelpb.ExportTraceServiceRequest
-	lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
-	if err = req.UnmarshalProtobuf(protobufData); err != nil {
-		httpserver.Errorf(w, r, "cannot unmarshal request from %d protobuf bytes: %w", len(protobufData), err)
+	err = protoparserutil.ReadUncompressedData(bytes.NewReader(protobufData), encoding, maxRequestSize, func(data []byte) error {
+		var (
+			req         otelpb.ExportTraceServiceRequest
+			callbackErr error
+		)
+		lmp := cp.NewLogMessageProcessor("opentelemetry_traces", false)
+		if callbackErr = req.UnmarshalProtobuf(data); callbackErr != nil {
+			return fmt.Errorf("cannot unmarshal request from %d protobuf bytes: %w", len(data), callbackErr)
+		}
+		callbackErr = pushExportTraceServiceRequest(&req, lmp)
+		lmp.MustClose()
+		return callbackErr
+	})
+
+	if err != nil {
+		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
 		return
 	}
-	_ = pushExportTraceServiceRequest(&req, lmp)
-	lmp.MustClose()
 
 	writeExportTraceResponses(w, 0, "")
 	return
@@ -232,7 +243,6 @@ func pushFieldsFromScopeSpans(ss *otelpb.ScopeSpans, commonFields []logstorage.F
 
 func pushFieldsFromSpan(span *otelpb.Span, scopeCommonFields []logstorage.Field, lmp insertutil.LogMessageProcessor) []logstorage.Field {
 	fields := scopeCommonFields
-	println(span.TraceID)
 	fields = append(fields,
 		logstorage.Field{Name: otelpb.TraceIDField, Value: span.TraceID},
 		logstorage.Field{Name: otelpb.SpanIDField, Value: span.SpanID},
