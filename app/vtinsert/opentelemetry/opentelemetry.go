@@ -1,9 +1,7 @@
 package opentelemetry
 
 import (
-	"encoding/binary"
 	"fmt"
-	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -21,6 +19,8 @@ import (
 )
 
 var maxRequestSize = flagutil.NewBytes("opentelemetry.traces.maxRequestSize", 64*1024*1024, "The maximum size in bytes of a single OpenTelemetry trace export request.")
+
+const OLTPExportTracesGrpcPath = "/opentelemetry.proto.collector.trace.v1.TraceService/Export"
 
 var (
 	requestsProtobufTotal = metrics.NewCounter(`vt_http_requests_total{path="/insert/opentelemetry/v1/traces",format="protobuf"}`)
@@ -161,7 +161,7 @@ func handleJSONRequest(r *http.Request, w http.ResponseWriter) {
 }
 
 func GrpcRequestHandler(r *http.Request, w http.ResponseWriter) {
-	if r.URL.Path != "/opentelemetry.proto.collector.trace.v1.TraceService/Export" {
+	if r.URL.Path != OLTPExportTracesGrpcPath {
 		httpserver.Errorf(w, r, "failed to process grpc request:%s", &httpserver.ErrorWithStatusCode{Err: fmt.Errorf("grpc method not found: %s", r.URL.Path), StatusCode: http.StatusNotFound})
 		return
 	}
@@ -193,34 +193,11 @@ func GrpcRequestHandler(r *http.Request, w http.ResponseWriter) {
 		httpserver.Errorf(w, r, "cannot unmarshal request from %d protobuf bytes: %w", len(protobufData), err)
 		return
 	}
-	err = pushExportTraceServiceRequest(&req, lmp)
+	_ = pushExportTraceServiceRequest(&req, lmp)
 	lmp.MustClose()
-	if err != nil {
-		httpserver.Errorf(w, r, "cannot read OpenTelemetry protocol data: %s", err)
-	}
 
+	writeExportTraceResponses(w, 0, "")
 	return
-}
-
-func getProtobufData(r *http.Request) ([]byte, error) {
-	reqBody, err := io.ReadAll(r.Body)
-	if err != nil {
-		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("cannot read request body: %s", err)}
-	}
-	// |___compressType___|___messageLength___|___message___|
-	// 0                  1                   5             N
-	if len(reqBody) < 5 {
-		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid grpc header length: %d", len(reqBody))}
-	}
-	grpcHeader := reqBody[:5]
-	if isCompress := grpcHeader[0]; isCompress != 0 {
-		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("grpc compression not supporte")}
-	}
-	messageLength := binary.BigEndian.Uint32(grpcHeader[1:5])
-	if len(reqBody) != 5+int(messageLength) {
-		return nil, &httpserver.ErrorWithStatusCode{StatusCode: http.StatusBadRequest, Err: fmt.Errorf("invalid message length: %d", messageLength)}
-	}
-	return reqBody[5:], nil
 }
 
 func pushExportTraceServiceRequest(req *otelpb.ExportTraceServiceRequest, lmp insertutil.LogMessageProcessor) error {
@@ -255,6 +232,7 @@ func pushFieldsFromScopeSpans(ss *otelpb.ScopeSpans, commonFields []logstorage.F
 
 func pushFieldsFromSpan(span *otelpb.Span, scopeCommonFields []logstorage.Field, lmp insertutil.LogMessageProcessor) []logstorage.Field {
 	fields := scopeCommonFields
+
 	fields = append(fields,
 		logstorage.Field{Name: otelpb.TraceIDField, Value: span.TraceID},
 		logstorage.Field{Name: otelpb.SpanIDField, Value: span.SpanID},

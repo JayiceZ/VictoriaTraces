@@ -90,6 +90,44 @@ func (r *ExportTraceServiceRequest) UnmarshalJSONCustom(src []byte) (err error) 
 	return nil
 }
 
+// ExportTraceServiceResponse represent the OTLP export trace grpc response message
+// https://github.com/open-telemetry/opentelemetry-proto/blob/v1.8.0/opentelemetry/proto/collector/trace/v1/trace_service.proto#L43
+type ExportTraceServiceResponse struct {
+	ExportTracePartialSuccess ExportTracePartialSuccess
+}
+
+// MarshalProtobuf marshals r to protobuf message, appends it to dst and returns the result.
+func (r *ExportTraceServiceResponse) MarshalProtobuf(dst []byte) []byte {
+	m := mp.Get()
+	r.marshalProtobuf(m.MessageMarshaler())
+	dst = m.Marshal(dst)
+	mp.Put(m)
+	return dst
+}
+
+func (r *ExportTraceServiceResponse) marshalProtobuf(mm *easyproto.MessageMarshaler) {
+	//message ExportTraceServiceResponse {
+	//	ExportTracePartialSuccess partial_success = 1;
+	//}
+	r.ExportTracePartialSuccess.marshalProtobuf(mm.AppendMessage(1))
+}
+
+// ExportTracePartialSuccess represent partial success description in grpc response
+// https://github.com/open-telemetry/opentelemetry-proto/blob/v1.8.0/opentelemetry/proto/collector/trace/v1/trace_service.proto#L62
+type ExportTracePartialSuccess struct {
+	RejectedSpans uint64
+	ErrorMessage  string
+}
+
+func (ps *ExportTracePartialSuccess) marshalProtobuf(mm *easyproto.MessageMarshaler) {
+	//message ExportTracePartialSuccess {
+	//	int64 rejected_spans = 1;
+	//	string error_message = 2;
+	//}
+	mm.AppendFixed64(1, ps.RejectedSpans)
+	mm.AppendString(2, ps.ErrorMessage)
+}
+
 // ResourceSpans represent a collection of ScopeSpans from a Resource.
 //
 // https://github.com/open-telemetry/opentelemetry-proto/blob/v1.5.0/opentelemetry/proto/trace/v1/trace.proto#L48
