@@ -232,7 +232,7 @@ func pushFieldsFromScopeSpans(ss *otelpb.ScopeSpans, commonFields []logstorage.F
 
 func pushFieldsFromSpan(span *otelpb.Span, scopeCommonFields []logstorage.Field, lmp insertutil.LogMessageProcessor) []logstorage.Field {
 	fields := scopeCommonFields
-
+	println(span.TraceID)
 	fields = append(fields,
 		logstorage.Field{Name: otelpb.TraceIDField, Value: span.TraceID},
 		logstorage.Field{Name: otelpb.SpanIDField, Value: span.SpanID},

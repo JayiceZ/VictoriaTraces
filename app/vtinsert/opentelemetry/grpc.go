@@ -40,7 +40,7 @@ func getProtobufData(r *http.Request) ([]byte, error) {
 }
 
 // https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#message-encoding
-func writeExportTraceResponses(w http.ResponseWriter, rejectedSpans uint64, errorMessage string) {
+func writeExportTraceResponses(w http.ResponseWriter, rejectedSpans int64, errorMessage string) {
 	resp := pb.ExportTraceServiceResponse{
 		ExportTracePartialSuccess: pb.ExportTracePartialSuccess{
 			RejectedSpans: rejectedSpans,
@@ -51,13 +51,7 @@ func writeExportTraceResponses(w http.ResponseWriter, rejectedSpans uint64, erro
 	grpcRespData := make([]byte, 5+len(respData))
 	grpcRespData[0] = 0
 	binary.BigEndian.PutUint32(grpcRespData[1:5], uint32(len(respData)))
-	for i := 0; i < len(grpcRespData); i++ {
-		print(grpcRespData[i])
-	}
 	copy(grpcRespData[5:], respData)
-	for i := 0; i < len(grpcRespData); i++ {
-		print(grpcRespData[i])
-	}
 	w.Header().Set("Content-Type", "application/grpc+proto")
 	w.Header().Set("Trailer", "grpc-status, grpc-message")
 
